@@ -38,5 +38,3 @@ def uncompress(str):
 
   # This line is outside of the while loop - this is linear (O(n))
   return ''.join(result)
-  
-
