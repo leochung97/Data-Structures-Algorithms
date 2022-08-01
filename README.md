@@ -1,5 +1,6 @@
 # Daily Log
 
 08/01/2022:
+
 - Completed Structy Introductory Course
-- Began Python
+- Completed Python 2 Introductory Course on Codeacademy
