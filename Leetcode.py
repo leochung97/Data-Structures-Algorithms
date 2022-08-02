@@ -1,7 +1,6 @@
-# 1. Two Sum
 from typing import Optional
 
-
+# 1. Two Sum
 class Solution:
   # Time complexity: O(n) because you run through the entire List at worst; Space complexity: O(n) as you may store the entire List in the hashmap at worst
   def twoSum(self, nums: List[int], target: int) -> List[int]:
@@ -66,3 +65,19 @@ class Solution:
     # Will set sort_list head to whichever linked list has values remaining
     sort_list = list1 or list2
     return output.next
+
+#121 Best Time to Buy / Sell Stock
+class Solution:
+  # Time complexity: O(n) as we only go through the input array of prices once; Space complexity: O(1) because we only set up two variables that aren't determined by input size
+  def maxProfit(self, prices: List[int]) -> int:
+    # Set up two variables, min_price which acts as our left pointer and is initially set to an arbitrarily large figure (infinity) to ensure that it is replaced by any stock value
+    # And max_profit, which is set to 0 to ensure that we return 0 if we do not find any profits at all
+    min_price, max_profit = float('inf'), 0
+
+    # price acts as our right pointer and will basically check if the right pointer value gives us a profit against the left pointer -> this will update max_profit if higher
+    for price in prices:
+      min_price = min(min_price, price)
+      max_profit = max(max_profit, price - min_price)
+    
+    # Returns the max_profit at the end which can be zero if no profits have been found or if the List was empty in the first place
+    return max_profit
