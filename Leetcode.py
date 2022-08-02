@@ -1,4 +1,5 @@
-from typing import Optional
+from typing import *
+from math import *
 
 # 1. Two Sum
 class Solution:
