@@ -1,4 +1,7 @@
 # 1. Two Sum
+from typing import Optional
+
+
 class Solution:
   # Time complexity: O(n) because you run through the entire List at worst; Space complexity: O(n) as you may store the entire List in the hashmap at worst
   def twoSum(self, nums: List[int], target: int) -> List[int]:
@@ -34,3 +37,32 @@ class Solution:
         return False
 
     return len(stack) == 0
+
+# 21. Merge Two Sorted Lists
+class ListNode:
+  def __init__(self, val = 0, next = None):
+    self.val = val
+    self.next = next
+
+class Solution:
+  # Time complexity: O(n + m) as it depends on the size of both linked lists; Space complexity: O(1) because we only set up a few variables that are not determined by input size
+  def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+    # We set up two variables here because sort_list will continuously be reassigned to its next value whereas output will only keep a receipt of the sort_list nexts
+    output = sort_list = ListNode(0)
+
+    # Checks if both lists are populated; if not, we know that we can just assign the sorted_list to the remaining list
+    while (list1 and list2):
+      if (list1.val < list2.val):
+        sort_list.next = list1.val
+        # Need to make sure that you reassign list1 to be its next value or the while loop will keep going
+        list1 = list1.next
+      else:
+        sort_list.next = list2.val
+        # Need to make sure that you reassign list2 to be its next value or the while loop will keep going
+        list2 = list2.next
+      # Makes sure to go to the next node of sort_list so that the next tail value can be assigned to another list value
+      sort_list = sort_list.next
+    
+    # Will set sort_list head to whichever linked list has values remaining
+    sort_list = list1 or list2
+    return output.next
