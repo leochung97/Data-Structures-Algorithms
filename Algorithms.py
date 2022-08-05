@@ -62,3 +62,5 @@ def compress(str):
         result.append(str[i])
 
   return ''.join(result)
+
+  

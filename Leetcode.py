@@ -67,7 +67,7 @@ class Solution:
     sort_list = list1 or list2
     return output.next
 
-#121 Best Time to Buy / Sell Stock
+#121. Best Time to Buy / Sell Stock
 class Solution:
   # Time complexity: O(n) as we only go through the input array of prices once; Space complexity: O(1) because we only set up two variables that aren't determined by input size
   def maxProfit(self, prices: List[int]) -> int:
@@ -82,3 +82,30 @@ class Solution:
     
     # Returns the max_profit at the end which can be zero if no profits have been found or if the List was empty in the first place
     return max_profit
+
+# 125. Valid Palindrome
+class Solution:
+  # Time complexity: O(n), we traverse over each character at-most once until the two pointers meet in the middle
+  # Space complexity: O(1), we only save variables for the pointers and their size is not determined by the size of the string input
+  def isPalindrome(self, s: str) -> bool:
+    # Set up two pointers, left and right, determined by the starting and ending index of the string
+    left, right = 0, len(s) - 1
+    
+    # Makes sure that the pointers meet in the middle
+    while left < right:
+      # Checks if either the left or the right character is not an alphanumeric character; basically removes any spaces
+      while left < right and not s[left].isalnum():
+        left += 1
+      while left < right and not s[right].isalnum():
+        right -= 1
+      
+      # Actually checks if the alphanumeric characters are not the same going forward and backwards, meaning it's not a palindrome if found to be false
+      if s[left].lower() != s[right].lower():
+        return False
+      
+      # Want to make sure that you're still going through the string even after checking
+      left += 1
+      right -= 1
+    
+    # Return true because the while loop has been exited
+    return True
