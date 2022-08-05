@@ -1,7 +1,8 @@
 # Daily Log
 
 08/05/2022:
-- Completed Leetcode #226
+- Completed Leetcode #226, #242, and #704
+- Continued Structy Array and String Course
 
 08/04/2022:
 - Worked on Thiscord clone
