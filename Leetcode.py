@@ -109,3 +109,24 @@ class Solution:
     
     # Return true because the while loop has been exited
     return True
+
+# 226. Invert Binary Tree
+
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+  # Time complexity: O(n); You must traverse the entire node tree so the best possible solution is O(n)
+  # Space complexity: O(n); You must return the reversed tree so it will be O(n) space complexity (dependent on input)
+  def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+    # Checks if the root node exists
+    if root:
+      # Recursively reverses the root node's branches
+      root.left, root.right = self.invertTree(root.right), self.invertTree(root.left)
+      # Make sure to return root here so that the recursion continues unless if statement is no longer completed
+      return root
+    # No need to explicitly return root here but invertTree would return [] if no root
+    return root
