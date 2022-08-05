@@ -130,3 +130,21 @@ class Solution:
       return root
     # No need to explicitly return root here but invertTree would return [] if no root
     return root
+
+# 242. Valid Anagram
+class Solution:
+  # Time complexity: O(n); You must traverse both strings whose length is n each
+  # Space complexity: O(1); Size of the strings doesn't matter as only a hashmap is stored containing the count of the strings
+  def isAnagram(self, s: str, t: str) -> bool:
+    # Checks if the length of the strings are the same; if not, return False
+    if len(s) != len(t):
+      return False
+    
+    # Counter is a built-in Python function that comes from collections library; it iterates through every character in the string and creates a hashmap counter
+    return Counter(s) == Counter(t)
+
+    # Otherwise, you can use the following answer to be more explicit:
+    # counter = collections.defaultdict(int)
+    # for char in s: counter[char] += 1
+    # for char in t: counter[char] -= 1
+    # return all(char == 0 for char in counter.values())
