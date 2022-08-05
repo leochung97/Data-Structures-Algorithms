@@ -38,3 +38,27 @@ def uncompress(str):
 
   # This line is outside of the while loop - this is linear (O(n))
   return ''.join(result)
+
+# compress is O(n) time complexity; n represents the length of the input string; Space complexity is O(n) as well as we create a resulting string that is dependent on the input string size; can use two-pointers to track the length of character patterns 
+def compress(str):
+  # Add a non-alphanumerical character so that the first if statement will count the last character in the string as a new character and thus hit the else statement
+  str += "!"
+  # We use a list here instead of a string output because if you append to a new string in Python you are technically rebuilding the string and thus having an O(n^2) solution in your while loop
+  result = []
+  i = 0
+  j = 0
+
+  while j < len(str):
+    if str[i] == str[j]:
+      j += 1
+    else:
+      num = j - 1
+      if num == 1:
+        # Don't want to add 1 to the compressed string so we just add the character only
+        result.append(str[i])
+      else:
+        # If the number isn't 1, then we can add both the number and the character
+        result.append(num)
+        result.append(str[i])
+
+  return ''.join(result)
