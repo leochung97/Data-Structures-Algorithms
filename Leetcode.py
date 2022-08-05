@@ -148,3 +148,28 @@ class Solution:
     # for char in s: counter[char] += 1
     # for char in t: counter[char] -= 1
     # return all(char == 0 for char in counter.values())
+
+# 704. Binary Search
+class Solution:
+  # Time complexity: O(log N); You are splitting the input size of the list (nums) in half in each iteration of your while loop
+  # Space complexity: O(1); You are only creating variables with constant space complexity as none of them are dependent on the input size
+  def search(self, nums: List[int], target: int) -> int:
+    # Set up two variables (two pointers) to track left and right indexes
+    left, right = 0, len(nums) - 1
+
+    # should conclude if left ever goes over the right
+    while (left <= right):
+      # Sets the new mid up at the beginning of every while loop as to account for a new "view" of the array
+      # // operator returns floor division, rounding down to the nearest whole integer
+      mid = (left + right) // 2
+      # Checks if the middle index is the target; if it is, returns it
+      if nums[mid] == target:
+        return mid
+      # Checks if the middle index is to the left of the target, in which case it makes left = mid + 1 so that the "view" is only on the right part of the array
+      elif nums[mid] < target:
+        left = mid + 1
+      # Else, we know that the target is less than the nums[mid] so set right = mid - 1 to "view" only the left portion of the array
+      else:
+        right = mid - 1
+    # If all else fails, return -1 to indicate that the number does not exist in the solution
+    return -1
