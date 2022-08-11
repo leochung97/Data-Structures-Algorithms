@@ -39,7 +39,7 @@ def uncompress(str):
   # This line is outside of the while loop - this is linear (O(n))
   return ''.join(result)
 
-# compress is O(n) time complexity; n represents the length of the input string; Space complexity is O(n) as well as we create a resulting string that is dependent on the input string size; can use two-pointers to track the length of character patterns 
+# compress is O(n) time complexity; n represents the length of the input string; Space complexity is O(n) as well as we create a resulting string that is dependent on the input string size; can use two-pointers to track the length of character patterns
 def compress(str):
   # Add a non-alphanumerical character so that the first if statement will count the last character in the string as a new character and thus hit the else statement
   str += "!"
@@ -70,6 +70,8 @@ class Node:
     self.next = None
 
 # Reversing a linked list requires three variables to be set up to keep track of: the previous node, the current node, and the next node
+# Time complexity: O(n); you must traverse the entire list to reverse it!
+# Space complexity: O(1); we set variables that track the next node's values but it is not dependent on the size of the list
 def reverse_list(head):
   # Previous node is set to None because there is no tail to reverse to just yet
   prev = None
@@ -90,6 +92,8 @@ def reverse_list(head):
   return prev
 
 # Zipper List requires several variables to be set up in order to be solved ITERATIVELY (more optimal than recursive)
+# Time complexity: O(min(n, m)) because the lists can be small and therefore result in a faster solution since we just add the remaining values to the end of the list if one list ends
+# Space complexity: O(1); we set variables to track the next node's value but our variables do not depend on the space of either list
 def zipper_list(head_1, head_2):
   # Start off by setting a variable equal to the first head of the first linked list
   tail = head_1
