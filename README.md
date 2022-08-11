@@ -1,5 +1,16 @@
 # Daily Log
 
+08/10/2022:
+- Completed Thiscord clone
+- Completed Structy Array and String Course 
+
+08/09/2022:
+- Worked on Thiscord clone
+- Completed Leetcode #704 (Binary Search)
+
+08/08/2022:
+- Worked on Thiscord clone
+
 08/05/2022:
 - Completed Leetcode #226, #242, and #704
 - Continued Structy Array and String Course
