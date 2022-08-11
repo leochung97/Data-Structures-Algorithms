@@ -1,5 +1,9 @@
 # Daily Log
 
+08/11/2022:
+- Began Structy Linked List Course
+- 
+
 08/10/2022:
 - Completed Thiscord clone
 - Completed Structy Array and String Course 

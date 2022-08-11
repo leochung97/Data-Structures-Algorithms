@@ -63,4 +63,28 @@ def compress(str):
 
   return ''.join(result)
 
+# Generic code for setting up a linked list
+class Node:
+  def __init__(self, val):
+    self.val = val
+    self.next = None
+
+# Reversing a linked list requires three variables to be set up to keep track of: the previous node, the current node, and the next node
+def reverse_list(head):
+  # Previous node is set to None because there is no tail to reverse to just yet
+  prev = None
+  # Track the current node so that our "view" of the previous and next can shift along with the current
+  current = head
+  # We know that at the end of our original linked list, the tail will be None, so our while loop will end at the tail
+  while current is not None:
+    # Set next to current.next to keep track of it - once we set the current.next to prev (reverse the linked list), we would otherwise lose track of the next node
+    next = current.next
+    # Reverses the link to the previous node
+    current.next = prev
+    # Sets the previous node now to current node (prep for next reverse)
+    prev = current
+    # Sets the current node to the next node (shifting the "view" to the next set of nodes)
+    current = next
   
+  # Return previous here because we know that the previous node contains the new links to the reversed nodes
+  return prev
