@@ -112,11 +112,11 @@ class Solution:
 
 # 226. Invert Binary Tree
 
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 
 class Solution:
   # Time complexity: O(n); You must traverse the entire node tree so the best possible solution is O(n)

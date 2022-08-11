@@ -88,3 +88,38 @@ def reverse_list(head):
   
   # Return previous here because we know that the previous node contains the new links to the reversed nodes
   return prev
+
+# Zipper List requires several variables to be set up in order to be solved ITERATIVELY (more optimal than recursive)
+def zipper_list(head_1, head_2):
+  # Start off by setting a variable equal to the first head of the first linked list
+  tail = head_1
+  # Move the current view to the next value of the first linked list
+  current_1 = head_1.next
+  # We haven't added current_2 yet so we should set current_2 to head_2
+  current_2 = head_2
+  # We use a count variable here to determine when we alternate between the linked lists
+  count = 0
+
+  # Check if either list is None -> if it is, end the while loop
+  while head_1 is not None and head_2 is not None:
+    # If count is even, then we know that we should add current_2
+    if count % 2 == 0:
+      tail.next = current_2
+      current_2 = current_2.next
+    # Else we add current_1
+    else:
+      tail.next = current_1
+      current_1 = current_1.next
+    
+    # Don't forget to move the "view" from tail to its next value and increment the count
+    tail = tail.next
+    count += 1
+
+  # Since we exited out of the while loop, we know that one of the lists has values remaining and should be added as the next value
+  if current_1 is not None:
+    tail.next = current_1
+  else:
+    tail.next = current_2
+  
+  # Return head_1 here because tail variable has been updating its next values
+  return head_1
