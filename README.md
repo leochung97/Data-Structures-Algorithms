@@ -1,8 +1,15 @@
 # Daily Log
 
+08/15/2022:
+- Updated Thiscord per career coach comments
+-
+
+08/12/2022:
+- Reviewed Structy Linked List Course
+- Purchased and acquired Elements of Programming Interviews in Python and Cracking the Coding Interview"
+
 08/11/2022:
-- Began Structy Linked List Course
-- 
+- Began Structy Linked List Course 
 
 08/10/2022:
 - Completed Thiscord clone
