@@ -162,3 +162,23 @@ def is_univalue_list(head):
       return False
     current = current.next
   return True
+
+# Time complexity: O(n); You must iterate through every node in the list input to check for non-continuous values
+# Space complexity: O(1); Variables set are not dependent on input size
+def longest_streak(head):
+  max_streak = 0
+  curr_streak = 0
+  prev_val = None
+  current = head
+
+  while current is not None:
+    if current.val == prev_val:
+      curr_streak += 1
+    else:
+      curr_streak = 1
+    
+    max_streak = max(max_streak, curr_streak)
+    prev_val = current.val
+    current = current.next
+
+  return max_streak
