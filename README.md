@@ -1,7 +1,9 @@
 # Daily Log
 
 08/16/2022:
-- Continued Structy Linked List Course
+- Completed Structy Linked List Course
+- Completed Leetcode #2 and #21
+- Began reading Elements of Programming Interviews in Python
 
 08/15/2022:
 - Updated Thiscord per career coach comments
