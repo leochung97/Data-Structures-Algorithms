@@ -232,3 +232,31 @@ def create_linked_list(array):
     tail = tail.next
 
   return result.next
+
+# Add_lists is Leetcode 2: Add Two Numbers
+# Time complexity: O(max(n, m)); You must go through both linked lists and thus the time complexity is dependent on whichever list is longer in length
+# Space complexity: O(max(n, m)); Your output will depend on the greater of both linked lists as your answer is 
+def add_lists(head_1, head_2):
+  output = tail = Node(None)
+  carry = 0
+  current_1 = head_1
+  current_2 = head_2
+  
+  while current_1 is not None or current_2 is not None or carry == 1:
+    # Makes sure that there are values to add
+    val_1 = 0 if current_1 is None else current_1.val
+    val_2 = 0 if current_2 is None else current_2.val
+    sum = val_1 + val_2 + carry
+    carry = 1 if sum > 9 else 0
+    # Want to make sure to make a new node pointing to the digit and not the sum! Remember, each node should be ONE DIGIT
+    digit = sum % 10
+    tail.next = Node(digit)
+    tail = tail.next
+    
+    # Traverse both linked lists so unless they are already None
+    if current_1 is not None:
+      current_1 = current_1.next
+    if current_2 is not None:
+      current_2 = current_2.next
+    
+  return output.next
