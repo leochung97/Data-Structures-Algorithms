@@ -199,6 +199,8 @@ def remove_node(head, target_val):
     current = current.next
   return head
 
+# Time complexity: O(n); At worst, you traverse the entire list to add the new node
+# Space complexity: O(1); Variables set are not dependent on input size
 def insert_node(head, value, index):
   if index == 0:
     result = Node(value)
