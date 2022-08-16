@@ -127,3 +127,27 @@ def zipper_list(head_1, head_2):
   
   # Return head_1 here because tail variable has been updating its next values
   return head_1
+
+# Merge List is similar to Zipper List except that you have to set a dummy variable equal to Node(None) so that the function can properly work; otherwise, if you set tail variable to something else, you will face issues defining it's "next" value
+# Time complexity: O(min(n, m)); this is because the while loop will only continue until the length of the smaller list and eventually add everything to the tail afterwards
+# Space complexity: O(1); this is because we set variables to track the next values of each node but they do not depend on the space of either list input
+def merge_lists(head_1, head_2):
+  result = tail = Node(None)
+  current_1 = head_1
+  current_2 = head_2
+
+  while current_1 is not None and current_2 is not None:
+    if current_1.val < current_2.val:
+      tail.next = current_1
+      current_1 = current_1.next
+    else:
+      tail.next = current_2
+      current_2 = current_2.next
+    tail = tail.next
+  
+  if current_1 is not None:
+    tail.next = current_1
+  else:
+    tail.next = current_2
+  
+  return result.next
