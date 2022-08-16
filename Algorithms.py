@@ -151,3 +151,14 @@ def merge_lists(head_1, head_2):
     tail.next = current_2
   
   return result.next
+
+# Time complexity: O(n); You must iterate through every node in the list input to check for non-unique values
+# Space complexity: O(1); No variables are saved that depend on the node's length / size
+def is_univalue_list(head):
+  unique_val = head.val
+  current = head.next
+  while current is not None:
+    if current.val != unique_val:
+      return False
+    current = current.next
+  return True
