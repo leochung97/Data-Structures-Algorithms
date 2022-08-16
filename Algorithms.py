@@ -220,3 +220,15 @@ def insert_node(head, value, index):
     current = current.next
   
   return head
+
+# Time complexity: O(n); You must go through the entire array to create a linked list of all elements
+# Space complexity: O(n); You are creating a linked list of size n, dependent on the size of the array input
+def create_linked_list(array):
+  result = Node(None)
+  tail = result
+
+  for val in array:
+    tail.next = Node(val)
+    tail = tail.next
+
+  return result.next
