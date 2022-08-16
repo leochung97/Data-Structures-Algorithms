@@ -198,3 +198,23 @@ def remove_node(head, target_val):
     prev = current
     current = current.next
   return head
+
+def insert_node(head, value, index):
+  if index == 0:
+    result = Node(value)
+    result.next = head
+    return result
+  
+  count = 0
+  current = head
+
+  while current is not None:
+    if count == index - 1:
+      temp = current.next
+      current.next = Node(value)
+      current.next.next = temp
+    
+    count += 1
+    current = current.next
+  
+  return head
