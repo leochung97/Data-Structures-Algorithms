@@ -1,5 +1,8 @@
 # Daily Log
 
+08/17/2022:
+- Began Structy Binary Tree Course
+
 08/16/2022:
 - Completed Structy Linked List Course
 - Completed Leetcode #2 and #21

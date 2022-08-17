@@ -260,3 +260,25 @@ def add_lists(head_1, head_2):
       current_2 = current_2.next
     
   return output.next
+
+# Time complexity: O(n); You must go through each node in the binary tree
+# Space complexity: O(n); Return output depends on the size of the input binary tree
+def depth_first_search(root):
+  # Return empty array if the input binary tree is empty
+  if not root:
+    return []
+  
+  # Output array will contain all of the elements in DEPTH FIRST SEARCH order
+  output = []
+  # Begin iterative answer with a stack containing just the root
+  stack = [ root ]
+  # Check if the stack is empty using falsey if statements
+  while stack:
+    current = stack.pop()
+    output.append(current.val)
+    # Check from the right first using falsey if statements
+    if current.right:
+      stack.append(current.right)
+    if current.left:
+      stack.append(current.left)
+  return output
