@@ -282,3 +282,27 @@ def depth_first_search(root):
     if current.left:
       stack.append(current.left)
   return output
+
+# Deque (doubly ended queue) in Python is implemented using the module "collections"; Deque is preferred over a list in the cases where we need quicker append and pop operations from both ends of the container, as deque provides an O(1) time complexity for append and pop operations as compared to list whcih provides O(n) time complexity
+# deque.append(): Used to insert the value in its argument to the right end of the deque
+# deque.appendleft(): Used to insert the value in its argument to the left end of the deque
+# deque.pop(): Used to delete an argument from the right end of the deque
+# deque.popleft(): Used to delete an argument from the left end of the deque
+from collections import deque
+
+def breadth_first_values(root):
+  if not root:
+    return []
+  
+  queue = deque([ root ])
+  output = []
+  while queue:
+    node = queue.popleft()
+    output.append(node.val)
+    
+    if node.left:
+      queue.append(node.left)
+    if node.right:
+      queue.append(node.right)
+  
+  return output
