@@ -290,16 +290,24 @@ def depth_first_search(root):
 # deque.popleft(): Used to delete an argument from the left end of the deque
 from collections import deque
 
+# Time complexity: O(n); You must go through each node in the binary tree
+# Space complexity: O(n); Return output depends on the size of the input binary tree
 def breadth_first_values(root):
   if not root:
     return []
   
+  # Set up a special object (deque) that will allow for O(1) operations (append, appendleft, pop, popleft); this is built-in to Python library so fair game for interviews
+  # Can't do this problem recursively because it is a queue and not a stack
   queue = deque([ root ])
   output = []
+  
+  # Checks while queue is still full
   while queue:
+    # Pops out the leftmost node and appends it to the outputs
     node = queue.popleft()
     output.append(node.val)
     
+    # Checks the node to see if it has any leaves and appends them to the queue
     if node.left:
       queue.append(node.left)
     if node.right:
