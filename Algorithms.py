@@ -365,3 +365,16 @@ def _path_finder(root, target):
     return right_path
   
   return None
+
+# Time complexity: O(n); We must go through every node to check if the value is equal to the target
+# Space complexity: O(n); We are implementing a recursive stack which will hold O(n) space complexity based on the binary tree size
+def tree_value_count(root, target):
+  # Exits out recursive call if there is no root (i.e., no leaf node)
+  if root is None:
+    return 0
+  
+  # Sets match = 1 becase we can add it as a count later on
+  match = 1 if root.val == target else 0
+
+  # Recursively adds match and the results from future matches
+  return match + tree_value_count(root.left, target) +  tree_value_count(root.right, target)
