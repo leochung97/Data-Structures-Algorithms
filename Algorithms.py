@@ -329,3 +329,39 @@ def max_path_sum(root):
   
   # Return the current value of the node plus the max between its children
   return root.val + max(max_path_sum(root.left), max_path_sum(root.right))
+
+# Recursive solution to solving this problem
+# Time complexity: O(n); Solution is O(n) as it only goes through each node of the binary tree; however, this is due to the fact that we use the append function and then reversing the result afterwards
+# Space complexity: O(n); Could potentially be O(n) size
+def path_finder(root, target):
+  # Result is going to be the result fo the recursive _path_finder(root, target)
+  result = _path_finder(root, target)
+  # If the result is None, we know we didn't find the target and thus we should return None
+  if result is None:
+    return None
+  # If the result does exist, then we know that the array is currently set backwards and we need to reverse it using list slicing
+  else:
+    return result[::-1]
+
+# Note: If you put an underscore in front of a method, it generally sigals that it is a helper function
+def _path_finder(root, target):
+  # First, check if the root is none - this is our recursive call check
+  if root is None:
+    return None
+  
+  # If the root is the target, return an array containing the target
+  if root.val == target:
+    return [root.val]
+  
+  # left_path and right_path will return [root.val] but we must append the path nodes - note that the resulting path is reversed but will be reversed in the main function
+  left_path = _path_finder(root.left, target)
+  if left_path is not None:
+    left_path.append(root.val)
+    return left_path
+
+  right_path = _path_finder(root.left, target)
+  if right_path is not None:
+    right_path.append(root.val)
+    return right_path
+  
+  return None
