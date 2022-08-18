@@ -314,3 +314,18 @@ def breadth_first_values(root):
       queue.append(node.right)
   
   return output
+
+# Recursive solution to solving this problem
+# Time complexity: O(n); You must go through each node in the binary treee
+# Space complexity: O(n); Implements a call stack (recursive) so it is O(n) space complexity
+def max_path_sum(root):
+  # You want to make sure that the max(left, right) will never choose the non-existing node
+  if root is None:
+    return float('-inf')
+
+  # Checks if the node is a leaf node (i.e., has no children); if it is a leaf node, you just need to return its current value
+  if root.left is None and root.right is None:
+    return root.val
+  
+  # Return the current value of the node plus the max between its children
+  return root.val + max(max_path_sum(root.left), max_path_sum(root.right))
