@@ -1,5 +1,9 @@
 # Daily Log
 
+08/18/2022:
+- Continued Structy Binary Tree Course
+- Completed several Leetcode problems
+
 08/17/2022:
 - Began Structy Binary Tree Course
 
