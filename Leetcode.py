@@ -131,6 +131,28 @@ class Solution:
     # No need to explicitly return root here but invertTree would return [] if no root
     return root
 
+# 235. Lowest Common Ancestor of a Binary Search Tree
+# Note that this is a Binary Search Tree, which requires the left and right node values to be less than and greater than, respectively, the root node values
+# Time Complexity: O(n); This is the worst case scenario as you might have to traverse every node in the tree if the tree is a singly-linked list; Note that the average time complexity would be O(log(n)) as you split the tree nodes in half in this iterative solution
+# Space Complexity: O(1); This is not iterated using recursion so there is no stack and the only variable that is saved is not reliant on the input size
+
+class Solution:
+  def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+    # Set a current node to continuously check through
+    # Note that this assumes that there is a p and q
+    node = root
+    # While this node exists (is not None)
+    while node:
+      parent_val = node.val
+      # Since we know this is a binary search tree, we can check if p and q are both less than or greater than. If one is less and the other is greater, than it means that the current node must be our lowest common ancestor because we cannot traverse down left or right and find another common ancestor
+      # Else if p and q are both greater than or less than the current node value, then we can just traverse into one side (left or right) to get closer to the LCA
+      if p.val > parent_val and q.val > parent_val:
+        node = node.right
+      elif p.val < parent_val and q.val < parent_val:
+        node = node.left
+      else:
+        return node
+
 # 242. Valid Anagram
 class Solution:
   # Time complexity: O(n); You must traverse both strings whose length is n each
