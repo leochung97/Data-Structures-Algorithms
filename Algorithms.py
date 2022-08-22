@@ -378,3 +378,29 @@ def tree_value_count(root, target):
 
   # Recursively adds match and the results from future matches
   return match + tree_value_count(root.left, target) +  tree_value_count(root.right, target)
+
+# Time complexity: O(n); You must go through every node to check the value and add the path
+# Space complexity: O(n); At worst you'll have one path containing all node values
+def all_tree_paths(root):
+  # This will stop our recursive call; this should be placed in the front else we may run into an error if try to call root.left / root.right on a None root
+  if root is None:
+    return []
+  
+  # This will return the root.val in a list if it does not have any left or right nodes
+  if root.left is None and root.right is None:
+    return [ [root.val] ]
+  
+  # Set up a new list that represents all possible paths
+  paths = []
+  
+  # You assume that the function works and will return all sub-paths here
+  left_paths = all_tree_paths(root.left)
+  right_paths = all_tree_paths(root.right)
+
+  # For each sub_path in each side of the binary tree, we can append the original root value + the sub_path values as a new list to our paths output
+  for sub_paths in left_paths:
+    paths.append([root.val, *sub_paths])
+  for sub_paths in right_paths:
+    paths.append([root.val, *sub_paths])
+
+  return paths

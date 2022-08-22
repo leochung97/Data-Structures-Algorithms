@@ -67,7 +67,37 @@ class Solution:
     sort_list = list1 or list2
     return output.next
 
-#121. Best Time to Buy / Sell Stock
+# 110. Balanced Binary Tree
+class TreeNode:
+  def __init__(self, val=0, left=None, right=None):
+    self.val = val
+    self.left = left
+    self.right = right
+
+class Solution:
+  # Time complexity: O(n); For every subtree, we compute its height in constant time as well as compare the height of its children
+  # Space complexity: O(n); The cursion stack may go up to O(n) if the tree is unbalanced
+  def _isBalanced(self, root: TreeNode):
+    # An empty tree is balanced and has a height of -1
+    if not root:
+      return True, -1
+
+    # Check the subtrees to see if they are balanced
+    leftIsBalanced, leftHeight = self._isBalanced(root.left)
+    if not leftIsBalanced:
+      return False, 0
+
+    rightIsBalanced, rightHeight = self._isBalanced(root.right)
+    if not rightIsBalanced:
+      return False, 0
+
+    # If the subtrees are balanced, check if the current tree is balanced using their height
+    return (abs(leftHeight - rightHeight) < 2), 1 + max(leftHeight, rightHeight)
+    
+  def isBalanced(self, root: Optional[TreeNode]) -> bool:
+    return self._isBalanced(root)[0]
+
+# 121. Best Time to Buy / Sell Stock
 class Solution:
   # Time complexity: O(n) as we only go through the input array of prices once; Space complexity: O(1) because we only set up two variables that aren't determined by input size
   def maxProfit(self, prices: List[int]) -> int:
