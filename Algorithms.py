@@ -413,19 +413,24 @@ def tree_levels(root):
     return []
   
   levels = []
+  # Implement a queue using python collections deque
+  # You want to add the root and the current level of the tree to the queue to indicate what level the tree is currently at
   queue = deque([ (root, 0) ])
   while queue:
     current, level_num = queue.popleft()
     
+    # You want to only append to the current level number if the length of the levels is not equivalent - this is becasue we haven't add the next level yet
     if len(levels) == level_num:
       levels.append([ current.val ])
     else:
       levels[level_num].append(current.val)
       
+    # Add the left and right nodes to the queue and increment the level; you must increment the level because we are traversing down
     if current.left is not None:
       queue.append((current.left, level_num + 1))
       
     if current.right is not None:
       queue.append((current.right, level_num + 1))
   
+  # Return the levels array after appending all of the levels together
   return levels

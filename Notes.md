@@ -2,7 +2,8 @@
 
 ## Cracking the Coding Interview
 - If you haven't heard back from a company within 3 - 5 business days after your interview, check in (politely) with your recruiter
-- 
+- It is difficult to move from an SDET position to a dev position; consider targeting just developer roles or moving within 1 - 2 years of landing an SDET role
+
 
 ## Python:
 - Truthy values are values that evaluate to True in a boolean context

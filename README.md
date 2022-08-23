@@ -1,5 +1,17 @@
 # Daily Log
 
+08/23/2022:
+- Completed AppAcademy HackerRank (2/3)
+- Completed Leetcode #141 and #232
+- Finished Chapters II & III of Cracking the Coding Interview
+
+08/22/2022:
+- Finished Chapter I of Cracking the Coding Interview
+- Completed Leetcode #342
+
+08/19/2022:
+- Continued Structy Binary Tree Course
+
 08/18/2022:
 - Continued Structy Binary Tree Course
 - Completed several Leetcode problems
