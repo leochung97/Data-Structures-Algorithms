@@ -1,5 +1,8 @@
 # Daily Log
 
+08/24/2022:
+- Behavioral mock interview with career coach
+
 08/23/2022:
 - Completed AppAcademy HackerRank (2/3)
 - Completed Leetcode #141 and #232

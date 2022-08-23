@@ -17,4 +17,3 @@ Implemented using the module "collections"; Deque is preferred over a list in th
 - deque.appendleft(): Used to insert the value in its argument to the left end of the deque
 - deque.pop(): Used to delete an argument from the right end of the deque
 - deque.popleft(): Used to delete an argument from the left end of the deque
-
