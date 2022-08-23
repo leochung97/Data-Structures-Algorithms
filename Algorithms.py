@@ -403,4 +403,29 @@ def all_tree_paths(root):
   for sub_paths in right_paths:
     paths.append([root.val, *sub_paths])
 
+  # Return the output
   return paths
+
+# Time complexity: O(n); You must go through every node to check the value and add the current level
+# Space complexity: O(n); You are returning a variable holding all of the possible levels of the tree
+def tree_levels(root):
+  if root is None:
+    return []
+  
+  levels = []
+  queue = deque([ (root, 0) ])
+  while queue:
+    current, level_num = queue.popleft()
+    
+    if len(levels) == level_num:
+      levels.append([ current.val ])
+    else:
+      levels[level_num].append(current.val)
+      
+    if current.left is not None:
+      queue.append((current.left, level_num + 1))
+      
+    if current.right is not None:
+      queue.append((current.right, level_num + 1))
+  
+  return levels

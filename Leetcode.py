@@ -140,13 +140,39 @@ class Solution:
     # Return true because the while loop has been exited
     return True
 
-# 226. Invert Binary Tree
+# 141. Linked List Cycle
+class Solution:
+  # Time complexity: O(n); The fast pointer reaches the end first and the run time depends on the list's length, which is O(n)
+  # Space complexity: O(1); We only use two variable nodes (slow and fast) so the space complexity is going to be O(1)
+  # Use Floyd's Cycle Finding Algorithm:
+  # Set two pointers that act as a slow and fast runner - eventually, the fast runner will catch up to the slow runner if this is cyclical
+  # If the fast runner never catches up or the linked list ends, then you know that the list does not cycle
+  def hasCycle(self, head: Optional[ListNode])  -> bool:
+    # This is for empty lsits
+    if head is None:
+      return False
+    
+    # Set up two pointers that act as a slow and fast runner
+    slow = head
+    fast = head.next
 
+    # Continuously iterate through the linked list to check if the fast runner's nodes are None - if they are, then you know that the linked list ends and is not cyclical
+    while slow != fast:
+      if fast is None or fast.next is None:
+        return False
+
+      slow = slow.next
+      fast = fast.next.next
+
+    # You only return true after exiting the while loop (after determining that slow is indeed equal to fast)
+    return True
+
+# 226. Invert Binary Tree
 class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
+  def __init__(self, val=0, left=None, right=None):
+    self.val = val
+    self.left = left
+    self.right = right
 
 class Solution:
   # Time complexity: O(n); You must traverse the entire node tree so the best possible solution is O(n)
