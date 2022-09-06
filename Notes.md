@@ -4,7 +4,25 @@
 - If you haven't heard back from a company within 3 - 5 business days after your interview, check in (politely) with your recruiter
 - It is difficult to move from an SDET position to a dev position; consider targeting just developer roles or moving within 1 - 2 years of landing an SDET role
 
-### Behavioral Questions:
+### BIG O:
+- O (big O): In academia, big O describes an upper bound on time; an algorithm that is O(n) can also be O(n^2) or worse
+- Ω (big omega): In academia, Ω describes the lower bound on time; an algorithm that is Ω(n) can also be Ω(1) or better
+- Θ (big theta): In academia, Θ describes both big O and big omega; an algorithm is Θ(n) if it is both O(n) and Ω(n)
+
+### Behavioral Question Strategies:
+#### **Structuring Your Answer**
+- **Nugget First**: Start your response with a "nugget" that succinctly describes what your response will be about
+- **S.A.R.**: Situation, Action, and Result; Outline the situation first, then explain the actions you took and follow lastly with the result 
+
+#### **Tell Me About Yourself**:
+My name is Leo and I am an ex-investment banker turned software engineer. My background was initially in finance; I completed my undergrad at Baruch College and spent the first few years out of college working as an investment banker. When I first started my career in finance, I had a few key values that I felt were important to me in a job: I had to be able to develop myself technically, and I had to have an impact through my work. While my career in finance did cover those two values, I felt as if I was dramatically slowing in my technical skill development as there are only so many ways to value an asset; and I also felt that my work had a limited scope of impact (mostly executives and investors cared).
+
+Although I was promoted early in my career and had an upward trajectory, I decided to still make the move to software engineering after networking with several people in tech. I decided to leave the finance industry at the end of 2021 and began a full stack software engineering bootcamp at AppAcademy shortly after. I graduated in the summer of 2022 and I have been developing my personal projects and studying.
+
+Outside of developing my personal apps, I participate in weekly coding competitions and assessments to develop my problem solving skills. I also have hobbies such as playing competitive first-person shooters (Valorant) and high fashion. 
+
+I'm here today because I want to develop myself and bring an impact through my work. I have always loved **xyz** and I think I would benefit quite a bit from your **xyz**.
+
 #### **Typer Drive**
 - **Challenges**: Difficult to learn JavaScript within a week and utilize it to build an animation-based fighting game; utilized 
 - **Mistakes / Failures**: Failed at using Canvas to animate health bars on screen; resorted instead to using HTML elements which turned out to be easier to implement and more easy to style with CSS instead of Canvas
