@@ -1,4 +1,5 @@
 from math import sqrt, floor
+from statistics import mean
 
 # is_prime in O(sqrt(n)) time complexity; O(1) space complexity
 def is_prime(n):
@@ -408,6 +409,7 @@ def all_tree_paths(root):
 
 # Time complexity: O(n); You must go through every node to check the value and add the current level
 # Space complexity: O(n); You are returning a variable holding all of the possible levels of the tree
+from collections import deque
 def tree_levels(root):
   if root is None:
     return []
@@ -434,3 +436,30 @@ def tree_levels(root):
   
   # Return the levels array after appending all of the levels together
   return levels
+
+# This question is basically tree_levels but with an added average - we use the mean function from the statistics library to calculate our average quickly
+from collections import deque
+from statistics import mean
+# Time complexity: O(n); You must go through every node to check the value and add the current level
+# Space complexity: O(n); You are returning a variable holding all of the possible levels of the tree
+def tree_level_averages(root):
+  if root is None:
+    return []
+
+  levels = []
+  queue = deque([(root, 0)])
+  while queue:
+    current, level_num = queue.popleft()
+
+    if len(levels) == level_num:
+      levels.append([current.val])
+    else:
+      levels[level_num].append(current.val)
+    
+    if current.left is not None:
+      queue.append((current.left, level_num + 1))
+    if current.right is not None:
+      queue.append((current.right, level_num + 1))
+  
+  # This is a Pythonic way of writing a map function; you call mean() function on every level in the levels array returned from your while loop
+  return [ mean(level) for level in levels ]
