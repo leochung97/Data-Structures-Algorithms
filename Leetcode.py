@@ -284,6 +284,22 @@ class Solution:
     else:
       return len(s)
 
+# 509. Fibonacci Number
+class Solution:
+  # This is a two-pointer solution to the classic Fibonacci problem
+  # Time complexity: O(n); You must iterate n times to return the final fibonacci number
+  # Space complexity: O(1); You use constant space for the variables assigned
+  def fib(self, n: int) -> int:
+    # Assign two variables to 0 and 1
+    a, b = 0, 1
+    # For each number from 0 to n, you will reassign a and b variables to b and a + b, respectively, essentially getting to the next fibonnaci number by using two pointers
+    for i in range(n):
+      a, b = b, a + b
+    # You want to return a instead of b here because b will always be reassigned to the next fibonacci number and not the current one
+    return a
+  # Note: There is a more optimal solution here using the golden ratio forumla but it would require you to know the golden ratio (1 + (5 ** 0.5)) / 2
+  # The time complexity is more efficient using the golden ratio (O(logN)) but it requires knowledge of the golden ratio 
+
 # 704. Binary Search
 class Solution:
   # Time complexity: O(log N); You are splitting the input size of the list (nums) in half in each iteration of your while loop
