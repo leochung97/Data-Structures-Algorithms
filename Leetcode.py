@@ -1,5 +1,6 @@
 from typing import *
 from math import *
+from collections import Counter
 
 # 1. Two Sum
 class Solution:
@@ -166,6 +167,40 @@ class Solution:
 
     # You only return true after exiting the while loop (after determining that slow is indeed equal to fast)
     return True
+
+# 169. Majority Element
+class Solution:
+  # First solution is by solving using a hashmap
+  # Time complexity: O(n); You must go through the list at least once to store all of the integers
+  # Space complexity: O(n); You must store all of the integers in the list into the hashmap so the worst space complexity is O(n)
+  def majorityElement(self, nums: List[int]) -> int:
+    # Create a hashmap and set it as a variable
+    hashmap = {}
+    # For each number, we want to increment the count and then check whether it is the majority number
+    for num in nums:
+      hashmap[num] = hashmap.get(num, 0) + 1
+      if hashmap[num] > len(nums) / 2:
+        return num
+
+  # Second solution is by solving using Boyer-Moore majority voting algorithm
+  # Time complexity: O(n); Boyer-Moore performs constant work n times, so the algorithm runs in linear time
+  # Space complexity: O(1); Allocates only constant memory
+  def majorityElement2(self, nums: List[int]) -> int:
+    # Set up a majority and count variable to track the majority number and a count that will keep track of the majority count
+    majority =  0
+    count = 0
+    for num in nums:
+      # If the count is zero, then you know that the majority number has been reset and should thus be set to the new num
+      if count == 0:
+        majority = num
+      # If the majority isn't already the number, then just decrement the count of it
+      if majority != num:
+        count -= 1
+      # However, if the majority is already the number, then we need to increment the count of it
+      else:
+        count += 1
+    # Return the tracked majority number
+    return majority
 
 # 226. Invert Binary Tree
 class TreeNode:

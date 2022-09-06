@@ -1,5 +1,11 @@
 # Daily Log
 
+09/06/2022:
+- Completed Leetcode #169
+
+09/04/2022:
+- Completed Leetcode #206 and #409
+
 08/24/2022:
 - Behavioral mock interview with career coach
 

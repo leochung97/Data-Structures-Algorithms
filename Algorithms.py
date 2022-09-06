@@ -70,7 +70,7 @@ class Node:
     self.next = None
 
 # Reversing a linked list requires three variables to be set up to keep track of: the previous node, the current node, and the next node
-# Time complexity: O(n); you must traverse the entire list to reverse it!
+# Time complexity: O(n); you must traverse the entire list
 # Space complexity: O(1); we set variables that track the next node's values but it is not dependent on the size of the list
 def reverse_list(head):
   # Previous node is set to None because there is no tail to reverse to just yet
