@@ -463,3 +463,32 @@ def tree_level_averages(root):
   
   # This is a Pythonic way of writing a map function; you call mean() function on every level in the levels array returned from your while loop
   return [ mean(level) for level in levels ]
+
+# This question is deceptive; you need to use depth-first search in order to reach the leaves in order
+# Time complexity: O(n); You must go through every node to check if the node is a leaf node
+# Space complexity: O(n); At worst, the entire tree will be a leaf
+def leaf_list(root):
+  # Check if root is None
+  if root is None:
+    return []
+
+  # Initiate a variable that will contain the leaves
+  leaves = []
+  # Initiate a stack (depth-first search) that contains your root
+  stack = [root]
+  
+  while stack:
+    # Pop off the current node
+    current = stack.pop()
+    
+    # Check if the current node is a leaf node by checking if it has a left or right node; if both are None, you know that this node is a leaf node and therefore can add it to the leaves list
+    if current.left is None and current.right is None:
+      leaves.append(current.val)
+    
+    # We want to check the RIGHT first to add to the stack so that when the stack pops another node off, it will pop off the LEFT node first, resulting in the binary tree being checked from left to right
+    if current.right is not None:
+      stack.append(current.right)
+    if current.left is not None:
+      stack.append(current.left)
+  
+  return leaves
