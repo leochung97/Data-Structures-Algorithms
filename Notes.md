@@ -48,10 +48,10 @@ I'm here today because I want to develop myself and bring an impact through my w
 - **What I Would Change**: If I could go back in time, I would reach out to my network of designers and software engineers first to ask about design (both for systems and frontend) recommendations. Since the timeline was short and my experience was lacking, I felt like we made several design decisions that we would later regret (i.e., unnecessary backend properties that we would never use / frontend design that could have been improved). If I had asked my friends earlier and spent more time contemplating a better overall design, I think we could have had a much better project
 
 ## Python:
-- Truthy values are values that evaluate to True in a boolean context
+- Truthy values are values that evaluate to True in a bocept 0 in eolean context
 - Falsey values are values that evaluate to False in a boolean context
 - Falsey values include empty sequences (lists, tuples, strings, dictionaries, sets), zero in every numeric type, None, and False
-- Truthy values include non-empty sequences, numbers (except 0 in every numeric type), and basically every value that is not falsey
+- Truthy values include non-empty sequences, numbers (exvery numeric type), and basically every value that is not falsey
 
 Deque (doubly ended queue) 
 Implemented using the module "collections"; Deque is preferred over a list in the cases where we need quicker append and pop operations from both ends of the container, as deque provides an O(1) time complexity for append and pop operations as compared to list which provides O(n) time complexity for the same operations
@@ -71,3 +71,9 @@ You can import statistics library to call statistics-based functions such as mea
 - covariance(): Sample covariance for two variables
 - correlation(): Pearson's correlation coefficient for two variables
 - linear_regression(): Slope and intercept for simple linear regression
+
+Built-in Data Types:
+- **Lists** are used to store multiple items in a single variable; they are ordered, changeable, indexed, and allow duplicate values (e.g., list = ["apple", "banana", "cherry"])
+- **Set** is a collection which is unordered, unchangeable, and unindexed; Note that while the items are unchangeable, they can be removed and added (e.g. set = {"apple", "banana", "cherry"})
+- **Tuple** is a collection which is ordered and unchangeable, they are written with round brackets (e.g. tuple = ("apple", "banana", "cherry"))
+- **Dictionary** is used to store data values in key:value pairs; it is a collection which is ordered (as of Python v3.7), changeable, and do not allow duplicate keys (e.g., dictionary = {"brand": "Ford", "model": "Mustang", "year": 1964})
