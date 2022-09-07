@@ -492,3 +492,51 @@ def leaf_list(root):
       stack.append(current.left)
   
   return leaves
+
+# Time complexity: O(e); You must check every edge to see if there is a path from node_A to node_B
+# Space complexity: O(n); We use a set to contain the nodes that we have visited so in the worst case we may store every node
+def undirected_path(edges, node_A, node_B):
+  # First you want to build a graph using the edges provided
+  graph = build_graph(edges)
+  # You pass the created graph into has_path to determine whether a path is available
+  return has_path(graph, node_A, node_B, set())
+  
+def build_graph(edges):
+  # Graph adjacency list can be represented with a hashmap containing key-value pairs of the node and its neighbors
+  graph = {}
+  
+  # For each edge in the provided edges, deconstruct the edge into a, b variable and then set up key-value pairs with the value being an empty list
+  for edge in edges:
+    a, b = edge
+    if a not in graph:
+      graph[a] = []
+    if b not in graph:
+      graph[b] = []
+    
+    # Append the neighbor to the list (do it both ways as to show that they are two-way neighbors)
+    graph[a].append(b)
+    graph[b].append(a)
+  
+  return graph
+
+# Helper function that returns a boolean if the src argument can reach the dst argument
+def has_path(graph, src, dst, visited):
+  # Will return True and pop off the recursive stack once this conditional is reached
+  if src == dst:
+    return True
+  
+  # We want to make sure that we are not accidentally going to have infinite recursive calls in case of a cyclical graph - this is why we have a set() containing our visited nodes
+  # We returned False if we already visited so that we can pop this call off of the recursive stack
+  if src in visited:
+    return False
+  
+  # Make sure to add the src node to the visited set so that it can be checked later
+  visited.add(src)
+  
+  # Recursively call this function on the neighbor now to check if it is the destination - if it is, then we know we can return True and end the recursion
+  for neighbor in graph[src]:
+    if has_path(graph, neighbor, dst, visited) == True:
+      return True
+  
+  # If we have not yet returned False, then we know that there is no pathway and we should return False
+  return False
