@@ -540,3 +540,36 @@ def has_path(graph, src, dst, visited):
   
   # If we have not yet returned False, then we know that there is no pathway and we should return False
   return False
+
+# Time complexity: O(e); You must check every edge to find the different connected components
+# Space complexity: O(n); You must go through every graph and hold a set of visited nodes
+def connected_components_count(graph):
+  # Create a visited set that will contain the visited nodes
+  # Note that sets have O(1) inclusion and access
+  visited = set()
+  count = 0
+  
+  # Recall that graph is provided in a hashmap containg key-value pairs of the node and its adjacency list
+  # For each key value, you would explore the graph, the key, and the visited set; check whether it returns True and increment the count of connected components
+  for node in graph:
+    if explore(graph, node, visited) == True:
+      count += 1
+    
+  return count
+
+# Helper function to determine whether the current node has already been visited and whether its neighbors have already been visited
+# If this function returns true, we know that the node hasn't been visited and its component neighbors haven't been visited
+def explore(graph, current, visited):
+  # Checks if the current node has already been visited
+  if current in visited:
+    return False
+  
+  # Adds the current value to the visited set
+  visited.add(current)
+  
+  # Explore each neighbor (DFS)
+  for neighbor in graph[current]:
+    explore(graph, neighbor, visited)
+
+  # Return True if no falses!
+  return True
