@@ -573,3 +573,35 @@ def explore(graph, current, visited):
 
   # Return True if no falses!
   return True
+
+# Time complexity: O(e); You must check every edge to find the different connected components
+# Space complexity: O(n); You must go through every graph and hold a set of visited nodes
+def largest_component(graph):
+  # Create a visited set that will contain the visited nodes
+  visited = set()
+  # Set up a variable to return later
+  largest = 0
+  # Check the size of each component and change largest if the size is largest
+  for node in graph:
+    size = explore_size(graph, node, visited)
+    if size > largest:
+      largest = size
+
+  # Return the largest
+  return largest
+
+
+# Helper function to determine the size of the component; you want to return 0 if this node was already visited because this entire component was already considered
+def explore_size(graph, node, visited):
+  # You want to return 0 because you don't want the size to be taking over the largest
+  if node in visited:
+    return 0
+
+  visited.add(node)
+
+  # Set size initially to 1 because you don't 
+  size = 1
+  for neighbor in graph[node]:
+    size += explore_size(graph, neighbor, visited)
+
+  return size
