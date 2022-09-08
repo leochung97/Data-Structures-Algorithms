@@ -349,3 +349,35 @@ class Solution:
         right = mid - 1
     # If all else fails, return -1 to indicate that the number does not exist in the solution
     return -1
+
+# 733. Flood Fill
+class Solution:
+  # Time complexity: O(n); You are going to visiting every "pixel" of the image so you will iterate through N pixels
+  # Space complexity: O(n); The size of the implicit call stack using DFS
+  def floodFill(self, image: List[List[int]], sr: int, sc: int, newColor: int) -> List[List[int]]:
+    # Set up two variables that will hold the max dimensions of the image (X, Y)
+    X, Y = len(image), len(image[0])
+    # Set up a variable to track the color at the starting pixel (sr, sc)
+    color = image[sr][sc]
+    # You want to return the image here if the color is already equal to the newColor because you don't want to flood fill the same color again
+    if color == newColor: return image
+
+    def dfs(x, y):
+      if image[x][y] == color:
+        # Set the current pixel to the new color if it isn't already
+        image[x][y] = newColor
+        # DFS the pixel left and right if they aren't out of bounds
+        if x >= 1:
+          dfs(x - 1, y)
+        if x + 1 < X:
+          dfs(x + 1, y)
+        # DFS the pixel above and below if they aren't out of bounds
+        if y >= 1:
+          dfs(x, y - 1)
+        if y + 1 < Y:
+          dfs(x, y + 1)
+    
+    # Don't forget to actually run the DFS on the image starting at the starting pixel
+    dfs(sr, sc)
+    # Remember that the image will be altered and thus should be returned as is
+    return image
