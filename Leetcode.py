@@ -116,6 +116,7 @@ class Solution:
         return memo[n]
 
     # Call climb(n) to get the number of steps possible - this is basically just the Fibonacci sequence answer
+    # You can technically answer this question in the same manner of the Fibonacci Number (#509)
     return climb(n)
 
 # 110. Balanced Binary Tree
