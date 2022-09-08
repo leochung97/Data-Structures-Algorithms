@@ -93,6 +93,31 @@ class Solution:
     sort_list = list1 or list2
     return output.next
 
+# 70. Climbing Stairs
+class Solution:
+  # Time complexity: O(n); You must go through n steps to calculate the number of steps
+  # Space complexity: O(n); We are storing all of the results from climbing stairs so we use O(n) space
+  def climbStairs(self, n: int) -> int:
+    # Set up a hashmap that will memoize the results that we have already calculated - this will help reduce the function from O(n^2) to O(n) since we are not running the sequence multiple times for results that we have already calculated
+    memo = {}
+    # Initialize the results of climbing stairs once or twice
+    memo[1] = 1
+    memo[2] = 2
+
+    # Helper function to actually climb and store data into the memo
+    def climb(n):
+      # If we already have the result in our memo, we shouldn't want to run another recursive call on it - we should just pull it from our hashmap
+      if n in memo:
+        return memo[n]
+      # If we don't have the result in our memo already, then we should recursively call climb to get the result - this is basically the Fibonacci sequence
+      else:
+        # Make sure that we memoize it though
+        memo[n] = climb(n - 1) + climb(n - 2)
+        return memo[n]
+
+    # Call climb(n) to get the number of steps possible - this is basically just the Fibonacci sequence answer
+    return climb(n)
+
 # 110. Balanced Binary Tree
 class TreeNode:
   def __init__(self, val=0, left=None, right=None):
