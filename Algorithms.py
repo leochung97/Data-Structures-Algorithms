@@ -650,3 +650,50 @@ def build_graph(edges):
     graph[b].append(a)
   
   return graph
+
+# Time complexity: O(xy); We must visit every node in the grid
+# Space complexity: O(xy); We store every node in the set
+def island_count(grid):
+  # Set up a set containing all of the visited nodes
+  visited = set()
+  # Set up a count that will keep count of the islands that we have explored
+  count = 0
+  # For each x and y coordinate, we want to check if the explore function returns True
+  for x in range(len(grid)):
+    for y in range(len(grid[0])):
+      # The explore helper function will check if the "island" is viable and then explore all of its possible neighbors to determine whether they are also islands
+      # The coordinates of neighbors will be added to the visited set and thus will not result in repeated counts
+      if explore(grid, x, y, visited) == True:
+        count += 1
+  # Return the count of islands afterwards
+  return count
+
+def explore(grid, x, y, visited):
+  # Check if the row and column coordinates (x, y arguments) are within bounds of the grid
+  row_inbounds = 0 <= x < len(grid)
+  col_inbounds = 0 <= y < len(grid[0])
+
+  # Return false if the row or column is not in the bounds of the grid
+  if not row_inbounds or not col_inbounds:
+    return False
+
+  # Return false if the current position isn't land
+  if grid[x][y] == "W":
+    return False
+
+  # You want to return false if the position is already in visited as well since we probably added this land mass to the count already
+  pos = (x, y)
+  if pos in visited:
+    return False
+  # Always make sure to add the node to the visited set!
+  visited.add(pos)
+
+  # Explore all of the neighbors in breadth first search; These will return Falses or Trues but it won't matter because we are only exploring to record their coordinates as visited
+  explore(grid, x - 1, y, visited)
+  explore(grid, x + 1, y, visited)
+  explore(grid, x, y - 1, visited)
+  explore(grid, x, y + 1, visited)
+
+  # We want to return True here because we know that we have passed all of the other tests and have recorded this position as a piece of land
+  # We also already marked all of the land masses as visited so we don't have to worry about double counting in our main function
+  return True
