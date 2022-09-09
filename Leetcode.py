@@ -349,7 +349,7 @@ class Solution:
     # You want to return a instead of b here because b will always be reassigned to the next fibonacci number and not the current one
     return a
   # Note: There is a more optimal solution here using the golden ratio forumla but it would require you to know the golden ratio (1 + (5 ** 0.5)) / 2
-  # The time complexity is more efficient using the golden ratio (O(logN)) but it requires knowledge of the golden ratio 
+  # The time complexity is more efficient using the golden ratio (O(log n)) but it requires knowledge of the golden ratio 
 
 # 704. Binary Search
 class Solution:
@@ -407,3 +407,33 @@ class Solution:
     dfs(sr, sc)
     # Remember that the image will be altered and thus should be returned as is
     return image
+
+# 1064. Fixed Point
+class Solution:
+  # Time complexity: O(log n); Since we're using a binary search, we halve the size of the array in each loop and thus reduce our time complexity to O(log n) time
+  # Space complexity: O(1); We don't use any additional space to perform the binary search so the space complexity is constant
+  def fixedPoint(self, arr: List[int]) -> int:
+    # Set up two variables that will serve as our binary search pointers
+    left, right = 0, len(arr) - 1
+    # Initiate the answer as -1 in case we never find our fixedPoint
+    answer = -1
+
+    # Binary search starts with the left pointer being less than or equal to the right pointer
+    while left <= right:
+      # Set up a middle variable that will track the current mid of the current arr[left::right]
+      mid = (left + right) // 2
+
+      # If the index is equal to itself at the middle of the arr, then we can say that the answer is mid
+      # We decrement the right to mid - 1 because we still want to check if there is a SMALLER index that satisfies arr[i] == 1
+      if arr[mid] == mid:
+        answer = mid
+        right = mid - 1
+      # Else we check if the arr[mid] is less than the current mid - if it is, we must increment left
+      elif arr[mid] < mid:
+        left = mid + 1
+      # Finally if all else fails, we know that arr[mid] is greater than the midpoint so we should decrement right
+      else:
+        right = mid - 1
+
+    # Make sure to return the answer - this should be a new value or -1 if nothing is found
+    return answer
