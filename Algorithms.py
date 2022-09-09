@@ -590,7 +590,6 @@ def largest_component(graph):
   # Return the largest
   return largest
 
-
 # Helper function to determine the size of the component; you want to return 0 if this node was already visited because this entire component was already considered
 def explore_size(graph, node, visited):
   # You want to return 0 because you don't want the size to be taking over the largest
@@ -605,3 +604,49 @@ def explore_size(graph, node, visited):
     size += explore_size(graph, neighbor, visited)
 
   return size
+
+# Time complexity: O(e); At worst, we will visit every edge in this breadth first search traversal
+# Space complexity: O(e); At worst, we will store every edge into our visited set, thus using O(e) memory
+def shortest_path(edges, node_A, node_B):
+  # Build a graph using the helper function below
+  graph = build_graph(edges)
+  # Create a set to keep track of visited nodes - we don't want to accidentally run an infinite loop in the case of cyclical graphs
+  visited = set([ node_A ])
+  # Create a queue using deque from Python collections library; Include a distance factor so that we can determine how far into the edges we are traversing
+  queue = deque([ (node_A, 0) ])
+
+  # While the queue is populated and we haven't returned yet...
+  while queue:
+    # Deconstruct the first item out of the queue to determine the current node and the current distance
+    node, distance = queue.popleft()
+
+    # If the current node is equal to our target node, then we have reached our destination as fast as possible and should return the distance
+    if node == node_B:
+      return distance
+
+    # If the current node isn't equal to our target node, then we should check the neighbors to see if they will be our target nodes
+    for neighbor in graph[node]:
+      # Only check the neighbor if we haven't already visited them - this prevents infinite recursive loops
+      if neighbor not in visited:
+        # Add the neighbor so we prevent infinite loops
+        visited.add(neighbor)
+        # Make sure to increment the distance because we are moving one edge away to the next node
+        queue.append((neighbor, distance + 1))
+  
+  # If you can't find anything - return -1!
+  return -1
+
+# We receive a list of edges and must build a graph out of it - note that the edges only have a connection between two nodes so all we have to do is initiate the two nodes under a hashmap to determine their neighbors
+def build_graph(edges):
+  graph = {}
+  for edge in edges:
+    a, b = edge
+    if a not in graph:
+      graph[a] = []
+    if b not in graph:
+      graph[b] = []
+    
+    graph[a].append(b)
+    graph[b].append(a)
+  
+  return graph
