@@ -313,6 +313,23 @@ class Solution:
     # for char in t: counter[char] -= 1
     # return all(char == 0 for char in counter.values())
 
+# 252. Meeting Rooms
+class Solution:
+  # Time complexity: O(nlog n); You sort the intervals so the best time complexity is O(nlog n)
+  # Space complexity: O(1); No additional space needed to solve this
+  def canAttendMeetings(self, intervals: List[List[int]]) -> bool:
+    # Sort all of the intervals by the starting time
+    intervals.sort(key=lambda x: x[0])
+
+    # For each interval starting from the second one, check if the starting interval is less than the previous ending interval
+    for i in range(1, len(intervals) - 1):
+      # If it is less, then we know that we have intersecting meeting times and thus the person cannot attend all meetings -> return False
+      if intervals[i][0] < intervals[i - 1][-1]:
+        return False
+
+    # If no falses, then we should be good
+    return True
+
 # 409. Longest Palindrome
 class Solution:
   # Time complexity: O(n); You must go through each character in the input string to store into the set
