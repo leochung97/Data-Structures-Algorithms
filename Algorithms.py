@@ -697,3 +697,43 @@ def explore(grid, x, y, visited):
   # We want to return True here because we know that we have passed all of the other tests and have recorded this position as a piece of land
   # We also already marked all of the land masses as visited so we don't have to worry about double counting in our main function
   return True
+
+# Time complexity: O(rc); At worst, we iterate through every position so it would be O(row * column)
+# Space complexity: O(rc); At worst, we iterate through and store every position in our set so it would be O(row * column)
+def closest_carrot(grid, starting_row, starting_col):
+  # Create a visited set that contains our starting position
+  visited = set([ (starting_row, starting_col) ])
+  # Create a queue that will track the position that we are checking and the distance traveled
+  queue = deque([ (starting_row, starting_col, 0) ])
+
+  # Iterate through the queue as long as it exists or until we reach the carrot "C"
+  while queue:
+    # Deconstruct the row, column, and distance from the queue's first out element
+    row, col, distance = queue.popleft()
+
+    # Return the distance (already deconstructed) if the current position is the carrot
+    if grid[row][col] == "C":
+      return distance
+    
+    # If not returned, then we know we must add the current position's neighbors to the queue
+    deltas = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+
+    # For each delta, we need to check if the neighbor was already visited and whether it is within bounds - if it is, we can add it to the queue
+    for delta in deltas:
+      # Deconstruct the delta
+      delta_row, delta_col = delta
+      # Create the neighbor coordinates
+      neighbor_row = row + delta_row
+      neighbor_col = col + delta_col
+      pos = (neighbor_row, neighbor_col)
+      # Check if the neighbor is in the grid boundaries
+      row_inbounds = 0 <= neighbor_row < len(grid)
+      col_inbounds = 0 <= neighbor_col < len(grid[0])
+      
+      # If the neighbor is within bounds, not already visited, and not a wall ("X"), then we can proceed to add the position to the visited and append the new position
+      if row_inbounds and col_inbounds and pos not in visited and grid[row][col] != "X":
+        visited.add(pos)
+        queue.append((neighbor_row, neighbor_col, distance + 1))
+
+  # Default case is -1 if we don't find the shortest distance to the carrot
+  return -1
