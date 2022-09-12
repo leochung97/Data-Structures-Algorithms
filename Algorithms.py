@@ -737,3 +737,42 @@ def closest_carrot(grid, starting_row, starting_col):
 
   # Default case is -1 if we don't find the shortest distance to the carrot
   return -1
+
+# Time complexity: O(e); You must travel through each edge and determine whether it is a part of the longest distance
+# Space complexity: O(n); You might store each node in a dictionary to determine whether they are terminal nodes
+# Note that the graph in this problem is a directed acyclical graph (DAG), which makes the problem possible; Edges will point one-way and there is no cycle here
+def longest_path(graph):
+  # Set up a dictionary that will contain "terminal" nodes (nodes with no neighbors that it will point to) and their distances
+  distance = {}
+  # Check the neighbors of the node - if there are none (length == 0), then add the node to the distance dictionary and initially set their distance to 0
+  for node in graph:
+    if len(graph[node]) == 0:
+      distance[node] = 0
+  
+  # We want to use a helper function to traverse each node and add to the distance if it reaches a terminal node
+  for node in graph:
+    traverse_distance(graph, node, distance)
+
+  # Return the highest distance - this is the longest path
+  return max(distance.values())
+
+def traverse_distance(graph, node, distance):
+  # We know that the node is terminal so we can just end the function early
+  if node in distance:
+    return distance[node]
+
+  # Create a temp variable that will track the max distance that we have covered thus far
+  max_length = 0
+
+  # Check each possible path in neighbors
+  for neighbor in graph[node]:
+    # Assume that the attempt will return a distance
+    attempt = traverse_distance(graph, neighbor, distance)
+    # If the attempt's distance is longer than the max length, then we should set max length to the attempt
+    if attempt > max_length:
+      max_length = attempt
+  
+  # We know the new max_length through DFS (attempt) but we also need to make sure that we add 1 (current node) to the max_length
+  distance[node] = 1 + max_length
+  # Retrun the max_distance - this goes back up to our distance dictionary and will eventually be called by max(distance.values())
+  return distance[node]
