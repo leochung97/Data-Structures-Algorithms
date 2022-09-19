@@ -368,6 +368,38 @@ class Solution:
   # Note: There is a more optimal solution here using the golden ratio forumla but it would require you to know the golden ratio (1 + (5 ** 0.5)) / 2
   # The time complexity is more efficient using the golden ratio (O(log n)) but it requires knowledge of the golden ratio 
 
+# 543. Diameter of a Binary Tree
+class Solution:
+  # Time complexity: O(n); You must iterate through all nodes to determine the diameter of the binary tree
+  # Space complexity: O(n); You recursively call upon longest_path so there is an stack containing each node
+  def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+    # Set up a diameter variable that will track the diamater and be returned later
+    diameter = 0
+
+    # Set up a helper function that will actually count the nodes for us
+    def longest_path(node):
+      # We use Python's nonlocal here to bring the previously issued variable into the scope of this function
+      nonlocal diameter
+
+      # We know that if the node is None then we can just return 0 instead of adding to the current distance
+      if not node:
+        return 0
+
+      # Recursively call longest_path on the left and right paths of the node assuming - assuming they are not None, they will continue calling and adding to their path
+      left_path = longest_path(node.left)
+      right_path = longest_path(node.right)
+
+      # We know both paths now so we can set diameter equal to the max of either itself or the paths
+      diameter = max(diameter, left_path + right_path)
+
+      # You want to return the max of both paths + 1 because you are recursively returning this value to be set as your new diameter; 
+      return max(left_path, right_path) + 1
+
+    # Don't forget to call the actual function on the root so that it updates the diamater
+    longest_path(root)
+    # Return the diameter because that's what we are looking for here
+    return diameter
+
 # 704. Binary Search
 class Solution:
   # Time complexity: O(log N); You are splitting the input size of the list (nums) in half in each iteration of your while loop
