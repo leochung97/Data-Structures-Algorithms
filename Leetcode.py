@@ -93,6 +93,25 @@ class Solution:
     sort_list = list1 or list2
     return output.next
 
+# 53. Maximum Subarray
+class Solution:
+  # Time complexity: O(n); We iterate through each number in the List once so the time complexity at worse will be O(n)
+  # Space complexity: O(1); We do not use any extra space based on input size as we only set two variables
+  def maxSubArray(self, nums: List[int]) -> int:
+    # This is a dynamic programming solution using Kadane's Algorithm; Essentially, we iterate through each element of the array and determine whether that array is worth keeping
+    # Set up two variables equal to the first element of the input List
+    current_sub = max_sub = nums[0]
+
+    # For each number starting from the second element of the input List
+    for num in nums[1:]:
+      # Continuously set current_sub to either the max of the number it is enumerating or the current_sub + the number if higher; this will basically take out any negatives and reset the current_sub to the current number if that's higher
+      current_sub = max(num, current_sub + num)
+      # You want to also set the max_sub equal to either the max of itself and the current_sub
+      max_sub = max(max_sub, current_sub)
+    
+    # Return max_sub at the end because that's what we are really looking for
+    return max_sub
+
 # 70. Climbing Stairs
 class Solution:
   # Time complexity: O(n); You must go through n steps to calculate the number of steps
