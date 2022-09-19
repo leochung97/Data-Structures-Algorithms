@@ -14,14 +14,25 @@
 - **Nugget First**: Start your response with a "nugget" that succinctly describes what your response will be about
 - **S.A.R.**: Situation, Action, and Result; Outline the situation first, then explain the actions you took and follow lastly with the result 
 
-#### **Tell Me About Yourself**:
-My name is Leo and I am an ex-investment banker turned software engineer. My background was initially in finance; I completed my undergrad at Baruch College and spent the first few years out of college working as an investment banker. When I first started my career in finance, I had a few key values that I felt were important to me in a job: I had to be able to develop myself technically, and I had to have an impact through my work. While my career in finance did cover those two values, I felt as if I was dramatically slowing in my technical skill development as there are only so many ways to value an asset; and I also felt that my work had a limited scope of impact (mostly executives and investors cared).
+#### Technical Questions WAlkthrough
+- Listen: Pay Attention to any information in the problem description; Use BUD optimization (Bottlenecks, Unnecessary Work, Duplicated Work) 
+- Example: Debug your example - make sure that this is not too small or doesn't have any special cases
+- Brute Force: Get a brute force solution as soon as possible; State a naive algorithm and its runtime, then optimize from there
+- Optimize: Walk through your brute force with BUD optimization - then get some ideas around why your algorithm is inefficient or why it fails
+- Walk Through: Talk through your optimal solution approach in detail
+- Implement: Write beautiful code - modularize your code from the beginning and refactor to clean up anything that isn't pretty
+- Test: Do a conceptual test first by walking through your code; then highlight unusual or non-standard code; then finish by doing small test cases and maybe larger discuss special cases and edge cases
+
+If you find any bugs, fix them carefully.
+
+<!-- #### **Tell Me About Yourself**: -->
+<!-- My name is Leo and I am an ex-investment banker turned software engineer. My background was initially in finance; I completed my undergrad at Baruch College and spent the first few years out of college working as an investment banker. When I first started my career in finance, I had a few key values that I felt were important to me in a job: I had to be able to develop myself technically, and I had to have an impact through my work. While my career in finance did cover those two values, I felt as if I was dramatically slowing in my technical skill development as there are only so many ways to value an asset; and I also felt that my work had a limited scope of impact (mostly executives and investors cared).
 
 Although I was promoted early in my career and had an upward trajectory, I decided to still make the move to software engineering after networking with several people in tech. I decided to leave the finance industry at the end of 2021 and began a full stack software engineering bootcamp at AppAcademy shortly after. I graduated in the summer of 2022 and I have been developing my personal projects and studying.
 
 Outside of developing my personal apps, I participate in weekly coding competitions and assessments to develop my problem solving skills. I also have hobbies such as playing competitive first-person shooters (Valorant) and high fashion. 
 
-I'm here today because I want to develop myself and bring an impact through my work. I have always loved **xyz** and I think I would benefit quite a bit from your **xyz**.
+I'm here today because I want to develop myself and bring an impact through my work. I have always loved **xyz** and I think I would benefit quite a bit from your **xyz**. -->
 
 #### **Typer Drive**
 - **Challenges**: Difficult to learn JavaScript within a week and utilize it to build an animation-based fighting game; utilized 
