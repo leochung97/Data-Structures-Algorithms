@@ -14,7 +14,7 @@
 - **Nugget First**: Start your response with a "nugget" that succinctly describes what your response will be about
 - **S.A.R.**: Situation, Action, and Result; Outline the situation first, then explain the actions you took and follow lastly with the result 
 
-#### Technical Questions WAlkthrough
+#### Technical Questions Walkthrough
 - Listen: Pay Attention to any information in the problem description; Use BUD optimization (Bottlenecks, Unnecessary Work, Duplicated Work) 
 - Example: Debug your example - make sure that this is not too small or doesn't have any special cases
 - Brute Force: Get a brute force solution as soon as possible; State a naive algorithm and its runtime, then optimize from there
