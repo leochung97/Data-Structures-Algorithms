@@ -776,3 +776,60 @@ def traverse_distance(graph, node, distance):
   distance[node] = 1 + max_length
   # Retrun the max_distance - this goes back up to our distance dictionary and will eventually be called by max(distance.values())
   return distance[node]
+
+# Time complexity: Oep); We traverse through every edge in our graph so this would just be O(prerequisites)
+# Space complexity: O(n); We are using DFS which requires recursion so our space complexity will be the stack of nodes we are visiting
+def semesters_required(num_courses, prereqs):
+  # We first build a graph using the helper function; Note that the helper function builds a DAG (directed acyclic graph)
+  graph = build_graph(num_courses, prereqs)
+
+  # We will track the distance (number of semesters) of each course using a distance hashmap
+  distance = {}
+
+  # For each course in the graph, we can say that the distance of the course if 1 if the course has no neighbors that it points to (this is an ending node)
+  for course in graph:
+    if len(graph[course]) == 0:
+      distance[course] = 1
+
+  # For each course in the graph, we want to iterate with a helper function that will take in our graph, check if the node has been given a distance, and add to its distance
+  for course in graph:
+    traverse_distance(graph, course, distance)
+
+  # Return the max distance as that is the longest semesters required to take all courses and their pre-requisites
+  return max(distance.values())
+
+
+def traverse_distance(graph, node, distance):
+  # If the node is already in distance (aka this has already been explored), then just return the distance of that node
+  if node in distance:
+    return distance[node]
+
+  max_distance = 0
+
+  # For each neighbor, recursively call traverse_distance on its neighbors and assume taht it will return the neighbors distance + 1
+  for neighbor in graph[node]:
+    neighbor_distance = traverse_distance(graph, neighbor, distance)
+    # Set the new max_distance as the max of itself of the neighbor_distance
+    max_distance = max(max_distance, neighbor_distance)
+
+  # Since we have updated max_distance for the node, we can update it to max_distance + 1 to include itself
+  distance[node] = max_distance + 1
+  # Return the distance of this node now so it can recursively add itself to the next iteration
+  return distance[node]
+
+
+def build_graph(num_courses, prereqs):
+  # Create the graph variable which will be a hashmap containing the graph nodes and their neighbors
+  graph = {}
+  # Remember that courses are numbered from 0 to the n-1 number of courses so we should use range to exclude num_courses
+  for course in range(0, num_courses):
+    # The graph now holds a key of the course (the pre-requisite) and its neighbors (the next course)
+    graph[course] = []
+  
+  # Add only b to a neighbor because this is a directed acyclic graph
+  for prereq in prereqs:
+    a, b = prereq
+    graph[a].append(b)
+
+  # Make sure to return the graph as this is a helper function
+  return graph
