@@ -777,7 +777,8 @@ def traverse_distance(graph, node, distance):
   # Retrun the max_distance - this goes back up to our distance dictionary and will eventually be called by max(distance.values())
   return distance[node]
 
-# Time complexity: Oep); We traverse through every edge in our graph so this would just be O(prerequisites)
+# It helps to draw this problem out as it is not obvious it is supposed to be a DAG
+# Time complexity: O(e); We traverse through every edge in our graph so this would just be O(prerequisites)
 # Space complexity: O(n); We are using DFS which requires recursion so our space complexity will be the stack of nodes we are visiting
 def semesters_required(num_courses, prereqs):
   # We first build a graph using the helper function; Note that the helper function builds a DAG (directed acyclic graph)
