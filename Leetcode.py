@@ -238,6 +238,30 @@ class Solution:
     # You only return true after exiting the while loop (after determining that slow is indeed equal to fast)
     return True
 
+# 167. Two Sum II
+class Solution:
+  # This is a twist on the classic Two Sum except the input array is now sorted, which indicates that you should probably use a binary search or two pointers; note that binary search is slightly slower O(nlog n)
+  # Time complexity: O(n); We are using two pointers method to check the elements at each pointer but at worst we may still go through every element in the array
+  # Space complexity: O(1); We are only using two variables so this is constant space
+  def twoSum(self, numbers: List[int], target: int) -> List[int]:
+    # Set up the left and right pointers to be equal to the start of the index and the end of the index, respectively
+    left, right = 0, len(numbers) - 1
+
+    # While left is less than right...
+    while left < right:
+      # Check if the left number + right number is equal to the target and return the answer (in this case we add +1 because the solution specifies so)
+      if numbers[left] + numbers[right] == target:
+        return [left + 1, right + 1]
+      # Else if the added number is less than the target, then we know we have to increment the left pointer to increase the sum
+      elif numbers[left] + numbers[right] < target:
+        left += 1
+      # Else if the added number is greater than the target, then we know we have to decrement the right pointer to decrease the sum
+      else:
+        right -= 1
+    
+    # Return [-1, -1] if we cannot find a pair that sums up to the target
+    return [-1, -1]
+
 # 169. Majority Element
 class Solution:
   # First solution is by solving using a hashmap
