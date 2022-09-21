@@ -834,3 +834,73 @@ def build_graph(num_courses, prereqs):
 
   # Make sure to return the graph as this is a helper function
   return graph
+
+# This problem is pretty difficult but can be broken down into multiple parts:
+# The main idea is to iterate through every grid cell to find one island and to plot that island in our "visited" set so that we can understand where it lies - this should be done through BFS
+# After finding a main island, we can use BFS to traverse every grid space in between and count the amount of water spaces in between islands
+# Time complexity: O(x * y); You must traverse every node in the grid to check for islands and their respective bridges
+# Space complexity: O(x * y); We store the visited nodes in a set so at worst we may store all of the nodes in the grid
+def best_bridge(grid):
+  # Set up a main island variable that will equate to None for now
+  main_island = None
+  for x in range(len(grid)):
+    for y in range(len(grid[0])):
+      # For every x and y coordinate in our grid, we want to use a helper function to determine if there is a potential island
+      potential_island = traverse_island(grid, x, y, set())
+      # If there is a potential island (determined by a set of coordinates),then we can set it as a main island
+      if len(potential_island) > 0:
+        main_island = potential_island
+        # It is important to break the for loops here otherwise we could potentially continue to iterate through our code and set new islands
+        break
+
+  # Now we can set our visited nodes as a set of our main_island coordinates
+  visited = set(main_island)
+  # We use a queue using Python's deque to optimize the data structure and make our lives easier
+  queue = deque([])
+  
+  # We want to start adding to our queue each position in our island and a distance starting at 0
+  for pos in main_island:
+    x, y = pos
+    queue.append((x, y, 0))
+
+  # For each main island coordinate, we deconstruct the x, y, and distance
+  # Then we can check if the coordinate is an island and NOT on the main island
+  # If it satisfies that condition, we know we have reached the other island and can return our distance - 1 (we subtract 1 because we don't want to count the second island coordinate)
+  while queue:
+    x, y, distance = queue.popleft()
+
+    if grid[x][y] == "L" and (x, y) not in main_island:
+      return distance - 1
+
+    # If we don't hit the above conditional, then we want to just check our neighbors and add them to our not visited set
+    deltas = [(1, 0), (0, 1), (-1, 0), (0, -1)]
+    for delta in deltas:
+      delta_row, delta_col = delta
+      neighbor_row = x + delta_row
+      neighbor_col = y + delta_col
+      neighbor_pos = (neighbor_row, neighbor_col)
+      if is_inbounds(grid, neighbor_row, neighbor_col) and neighbor_pos not in visited:
+        visited.add(neighbor_pos)
+        queue.append((neighbor_row, neighbor_col, distance + 1))
+
+# Helper function to determine whether our coordinates are inbound
+def is_inbounds(grid, x, y):
+  row_inbounds = 0 <= x < len(grid)
+  col_inbounds = 0 <= y < len(grid[0])
+  return row_inbounds and col_inbounds
+
+# Helper function to traverse and explore an island; Returns a set of island coordinates
+def traverse_island(grid, row, col, visited):
+  if not is_inbounds(grid, row, col) or grid[row][col] == "W":
+    return visited
+
+  pos = (row, col)
+  if pos in visited:
+    return visited
+  visited.add(pos)
+
+  traverse_island(grid, row - 1, col, visited)
+  traverse_island(grid, row + 1, col, visited)
+  traverse_island(grid, row, col - 1, visited)
+  traverse_island(grid, row, col + 1, visited)
+  return visited
