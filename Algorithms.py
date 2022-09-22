@@ -891,6 +891,8 @@ def is_inbounds(grid, x, y):
 
 # Helper function to traverse and explore an island; Returns a set of island coordinates
 def traverse_island(grid, row, col, visited):
+  # Make sure that the coordinates we are iterating through is actually an island
+  # We return visited because we use traverse_island to explore a set of island coordinates
   if not is_inbounds(grid, row, col) or grid[row][col] == "W":
     return visited
 
@@ -904,3 +906,39 @@ def traverse_island(grid, row, col, visited):
   traverse_island(grid, row, col - 1, visited)
   traverse_island(grid, row, col + 1, visited)
   return visited
+
+# Time complexity: O(n^2); At worst, we may traverse all of the nodes in the graph at least twice
+# Space complexity: O(n); We are storing the nodes in sets so at worst we may store all of the nodes
+def has_cycle(graph):
+  # We create two sets here that will contain the information that our current node is visiting and a set of already fully visited and tracked nodes
+  visiting, visited = set(), set()
+  # For each node in our graph, we want to check if it has a cycle that returns itself - we can do this using a helper function
+  for node in graph:
+    # If we detect a cycle in the current node (aka we found the node in its current visiting already), then we know we have a cycle
+    if cycle_detect(graph, node, visiting, visited):
+      return True
+  # If we don't find anything, we know we have visited all nodes and have not found any repeating visits
+  return False
+
+def cycle_detect(graph, node, visiting, visited):
+  # Return false if the node is already in visited because we don't need to check it again for a cycle
+  if node in visited:
+    return False
+  
+  # If the node is in visiting however, we know that we have already just checked for this node and found it again and thus found a cycle
+  if node in visiting:
+    return True
+  
+  # Make sure to actually add our current node to visiting
+  visiting.add(node)
+  
+  # For each of our neighbors, we can check the node by recursively iterating through the graph and finding if the neighbors are already in visiting - if they are, return True
+  for neighbor in graph[node]:
+    if cycle_detect(graph, neighbor, visiting, visited):
+      return True
+    
+  # If we don't find the neighbor, we remove the node from our visiting and add it to our visited (to make sure we don't accidentally redo this cycle)
+  visiting.remove(node)
+  visited.add(node)
+  # We return false at the end as well as we have determined no cycles
+  return False
