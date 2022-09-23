@@ -942,3 +942,35 @@ def cycle_detect(graph, node, visiting, visited):
   visited.add(node)
   # We return false at the end as well as we have determined no cycles
   return False
+
+# Time complexity: O(a * n); We need to reach a by subtracting from our numbers n, so we have a O(a * n) solution
+# Space complexity: O(a); We store up to our amount in our memo so our worst space complexity is O(a)
+def sum_possible(amount, numbers):
+  # Initialize a memo hashmap that will contain our previously calculated results
+  memo = {}
+  return _sum_possible(amount, numbers, memo)
+
+def _sum_possible(amount, numbers, memo):
+  # If we already know the the result, we don't want to recalculate it and should thus just return memo[amount]
+  if amount in memo:
+    return memo[amount]
+  
+  # If amount is less than 0, we know we have gone past the amount and it is not reachable through any of the numbers - thus we return False
+  if amount < 0:
+    return False
+  
+  # If amount is equal to 0, then we know that we must have reached it through a combination of numbers and can thus return True
+  if amount == 0:
+    return True
+  
+  # For each number in our numbers array, we want to recursively check if there is a possible amount that returns True after subtracting each number
+  # This will recursively check every single possible combination of numbers
+  for num in numbers:
+    if _sum_possible(amount - num, numbers, memo):
+      # If true then we need to set memo[amount] and return True
+      memo[amount] = True
+      return True
+    
+  # Otherwise, we can just return False and set memo[amount] to False
+  memo[amount] = False
+  return False
