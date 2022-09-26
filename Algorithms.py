@@ -1013,3 +1013,30 @@ def _min(amount, coins, memo):
   # Don't forget to set the memo[amount] to the result of the min_coins and return the min_coins
   memo[amount] = min_coins
   return min_coins
+
+# Time complexity; O(x * y); At worst, we may have to explore all of the possible spaces within the grid
+# Space complexity; O(x * y); At worst, we may store all of the grid coordinates into our memo
+def count_paths(grid):
+  # This is a dynamic programming question that we can use memoization to minimize our time complexity; set up a memo that will contain our already explored results
+  memo = {}
+  # Return a helper function that begins at (0, 0) and will continuously traverse downwards and to the right
+  return _count_paths(grid, 0, 0, memo)
+
+def _count_paths(grid, x, y, memo):
+  # We want to create a position out of the coordinates we are provided and use that position as our memo keys
+  pos = (x, y)
+  if pos in memo:
+    return memo[pos]
+  
+  # We write a conditional that determines whether our coordinates are out of the grid and whether we have hit a wall
+  if x == len(grid) or y == len(grid[0]) or grid[x][y] == "X":
+    return 0
+  
+  # We also write a conditional that if we have reached the end of the grid, then we know we can return 1 (a path has been found)
+  if x == len(grid) - 1 and y == len(grid[0]) - 1:
+    return 1
+  
+  # Recursively set the memo[pos]
+  memo[pos] = _count_paths(grid, x + 1, y, memo) + _count_paths(grid, x, y + 1, memo)
+  # Return the memo[pos] since it contains the answer
+  return memo[pos]
