@@ -974,3 +974,42 @@ def _sum_possible(amount, numbers, memo):
   # Otherwise, we can just return False and set memo[amount] to False
   memo[amount] = False
   return False
+
+# Time complexity: O(amount * coins); At worst, you will try every combination of coins to reach the specific amount; You can think of this as amount as height and coins as nodes so it would be amount * coins
+# Space complexity: O(a); At worst, you will store every value up to the amount value provided
+def min_change(amount, coins):
+  # Similar to the previous problem, we want to set up a memo to memorize some of our already explored answers
+  memo = {}
+  # We also set up a variable that will determine whether or not we have found a possible combination of answers that can return our answer
+  ans = _min(amount, coins, memo)
+  if ans == float('inf'):
+    return -1
+  else:
+    return ans
+  
+# This helper function will find the smallest combination of coins possible to reach the amount; Otherwise, the minimum number of coins will be left at infinity because no combination was found
+def _min(amount, coins, memo):
+  # We want to call upon previously calculated results in case there are any - thus we return memo[amount] if it already exists
+  if amount in memo:
+    return memo[amount]
+  
+  # If the amount is less than 0, then we know that we have gone too far with this combination of coins and should thus return an arbitrarily large figure to not mess with our minimum coins function
+  if amount < 0:
+    return float('inf')
+  
+  # If thje amount is equal to 0, then we know that we have found a possible combination of coins and can return 0 to indicate that we have found a combination
+  if amount == 0:
+    return 0
+  
+  # We set this variable to an arbitrarily large figure so that it can be replaced using the minimum function later on
+  min_coins = float('inf')
+  # Now we want to check for each coin in coins list (each possible combination):
+  for coin in coins:
+    # We want to recursively determine the paths - if it reaches 0 (possible combination), then we can continuously add a 1 to the result until we find the exact path
+    num_coins = 1 + _min(amount - coin, coins, memo)
+    # We need to make sure that we set the min_coins
+    min_coins = min(min_coins, num_coins)
+  
+  # Don't forget to set the memo[amount] to the result of the min_coins and return the min_coins
+  memo[amount] = min_coins
+  return min_coins
