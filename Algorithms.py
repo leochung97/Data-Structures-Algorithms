@@ -1,4 +1,4 @@
-from math import sqrt, floor
+import math
 from statistics import mean
 
 # is_prime in O(sqrt(n)) time complexity; O(1) space complexity
@@ -1095,3 +1095,36 @@ def _non_adjacent_sum(nums, i, memo):
   memo[i] = max(include, exclude)
   # You want to return memo[i] since it contains the maximum non-adjacent sum
   return memo[i]
+
+# Time complexity: O(n * sqrt(n)); At worst we will go up to sqrt of n (n times)
+# Space complexity: O(n); At worst we will store n results in our memo
+def summing_squares(n):
+  # Create a memo to store already calculated results
+  memo = {}
+  return _summing_squares(n, memo)
+
+def _summing_squares(n, memo):
+  # If we already have the value in our memo, we should just return it instead of calculating it again
+  if n in memo:
+    return memo[n]
+
+  # If n reaches 0, we can then return 0 as we know we have found a solution that we can stop at
+  # Note that we will never reach below n because we are iterating through i > 0 starting from 1
+  if n == 0:
+    return 0
+  
+  # Create an arbitrarily large value that will be replaced by a minimum number of summed squares
+  min_squares = float('inf')
+  # We want to start from 1 (our first perfect square), and go on only to the sqrt(n)
+  for i in range(1, math.floor(math.sqrt(n) + 1)):
+    # Make a square out of current i
+    square = i * i
+    # Determine the num_squares for each combination of i
+    num_squares = 1 + _summing_squares(n - square, memo)
+    # Set min_squares as the newest minimum
+    min_squares = min(min_squares, num_squares)
+  
+  # Set memo[n] as min_squares
+  memo[n] = min_squares
+  # Return memo[n] or min_squares as it has already been calculated
+  return memo[n]
