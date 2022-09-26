@@ -1069,3 +1069,29 @@ def _max_path_sum(grid, x, y, memo):
   # We then set the memo[pos] to the grid[x][y] + max(down, right); this not only determines which positions have been explored and stores it into our memo, but it also returns the max value that was explored
   memo[pos] = grid[x][y] + max(down, right)
   return memo[pos]
+
+# Time complexity: O(n); We must iterate through every number in the given list
+# Space complexity: O(n); We must store every possible result into our memo
+def non_adjacent_sum(nums):
+  # Create a memo that will store the results of completed calculatios so that they can be pulled later on
+  memo = {}
+  # We create a helper function that takes in an index argument, i, that will represent where our algorithm is currently checking
+  return _non_adjacent_sum(nums, 0, memo)
+
+def _non_adjacent_sum(nums, i, memo):
+  # If our i is already in the memo, then we know we can just return its value
+  if i in memo:
+    return memo[i]
+
+  # If our i has grown past the len of our numbers, then we know that we are out of bounds and should return 0
+  if i >= len(nums):
+    return 0
+  
+  # We create two variables; include will include our current number and any non-adjacent numbers as well; exclude will only include the numbers after our initial start
+  include = nums[i] + _non_adjacent_sum(nums, i + 2, memo)
+  exclude = _non_adjacent_sum(nums, i + 1, memo)
+  # Both include and exclude will return the highest sum possible and we should just find the max of that
+  # It is better to think of the possible combinations of numbers as a graph for this dynamic programming problem
+  memo[i] = max(include, exclude)
+  # You want to return memo[i] since it contains the maximum non-adjacent sum
+  return memo[i]
