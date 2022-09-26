@@ -1014,8 +1014,8 @@ def _min(amount, coins, memo):
   memo[amount] = min_coins
   return min_coins
 
-# Time complexity; O(x * y); At worst, we may have to explore all of the possible spaces within the grid
-# Space complexity; O(x * y); At worst, we may store all of the grid coordinates into our memo
+# Time complexity: O(x * y); At worst, we may have to explore all of the possible spaces within the grid
+# Space complexity: O(x * y); At worst, we may store all of the grid coordinates into our memo
 def count_paths(grid):
   # This is a dynamic programming question that we can use memoization to minimize our time complexity; set up a memo that will contain our already explored results
   memo = {}
@@ -1039,4 +1039,33 @@ def _count_paths(grid, x, y, memo):
   # Recursively set the memo[pos]
   memo[pos] = _count_paths(grid, x + 1, y, memo) + _count_paths(grid, x, y + 1, memo)
   # Return the memo[pos] since it contains the answer
+  return memo[pos]
+
+# Time complexity: O(x * y); At worst, we may have to explore all of the possible spaces within the grid
+# Space complexity; O(x * y); At worst, we have to store all of the grid coordinates into our memo
+def max_path_sum(grid):
+  # Again, we want to store our possibly explored options in a memo so we initialize a memo hashmap that will contain previously calculated answers
+  memo = {}
+  # We assume that our helper function will return the answer
+  return _max_path_sum(grid, 0, 0, memo)
+
+def _max_path_sum(grid, x, y, memo):
+  # Construct a position coordinate from your x and y arguments so that you can store it into your memo / fetch from your memo
+  pos = (x, y)
+  if pos in memo:
+    return memo[pos]
+
+  # If we are out of bounds, we know that we have reached the end of the grid and should just return 0
+  if x == len(grid) or y == len(grid[0]):
+    return 0
+  
+  # However, if we have reached the end of the grid, we should just return its value as the base case
+  if x == len(grid) - 1 and y == len(grid[0]) - 1:
+    return grid[x][y]
+  
+  # To make things more neat, we create two variables that represent the downward and rightward movement of our paths
+  down = _max_path_sum(grid, x + 1, y, memo)
+  right = _max_path_sum(grid, x, y + 1, memo)
+  # We then set the memo[pos] to the grid[x][y] + max(down, right); this not only determines which positions have been explored and stores it into our memo, but it also returns the max value that was explored
+  memo[pos] = grid[x][y] + max(down, right)
   return memo[pos]
