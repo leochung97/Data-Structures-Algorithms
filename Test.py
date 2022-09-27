@@ -6,4 +6,10 @@ def addBinary(a, b):
 
   return bin(x)[2:]
 
-print(addBinary("11", "1"))
+# print(addBinary("11", "1"))
+
+string = "abcdefg"
+left = string[1:]
+right = string[:-1]
+print(left)
+print(right)

@@ -1191,3 +1191,38 @@ def _array_steppers(numbers, i, memo):
   # If we couldn't find any possible values, then we should just return False
   memo[i] = False
   return False
+
+# Time complexity: O(n^2); We must go through each possible substring which will require O(n^2)
+# Space complexity: O(n^2); Since we are slicing to create substrings, we need to store all of the possible substrings and their respective results
+def max_palin_subsequence(string):
+  # Our helper function will take in an i and j (two pointers) along with a memo
+  return _max_palin_subsequence(string, 0, len(string) - 1, {})
+
+def _max_palin_subsequence(string, i, j, memo):
+  # We store i and j in a tuple that will serve as our memo keys
+  key = (i, j)
+  if key in memo:
+    return memo[key]
+
+  # If the two pointers meet, we know that we can return 1 because there is only one letter left in the string
+  if i == j:
+    return 1
+
+  # If the two pointers cross over each other, then we know that our string has reached the middle and is no longer a valid string
+  if i > j:
+    return 0
+
+  # If the two ends of the string are the same character, we know we can add + 2 to our max length as those two letters are palindrome
+  # Our next sequence for matching letters should be to increment i and decrement j to check if the next two letters are palindromes
+  if string[i] == string[j]:
+    memo[key] = 2 + _max_palin_subsequence(string, i + 1, j - 1, memo)
+  else:
+    # Else, we can just recursively call _max_palin_subsequence on an incremented i and decremented j to check every available substring combination
+    # Recall that we are looking for the max so we should only return one result that contains the highest value
+    memo[key] = max(
+      _max_palin_subsequence(string, i + 1, j, memo),
+      _max_palin_subsequence(string, i, j - 1, memo)
+    )
+  
+  # We already set the memo[key] in the previous line s and can just return it
+  return memo[key]
