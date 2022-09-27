@@ -443,6 +443,33 @@ class Solution:
     # Return the diameter because that's what we are looking for here
     return diameter
 
+# 680. Valid Palindrome II
+class Solution:
+  # Time complexity: O(n); We are using two pointers to iterate through every character in the string
+  # Space complexity: O(1); We are using a few variables but none depend on the input size of the string
+  def validPalindrome(self, s: str) -> bool:
+    # Create a helper function that just determines if the string is a valid palindrome
+    def check_palindrome(s, i, j):
+      while i < j:
+        if s[i] != s[j]:
+          return False
+        i += 1
+        j -= 1
+      return True
+    
+    # Set up the two pointers to be at the start and end of the string
+    i = 0
+    j = len(s) - 1
+    # In our while loop, we want to check if any of the characters are NOT equal (i.e., not a palindrome) and then check if we can still create a palindrome by excluding a letter
+    while i < j:
+      if s[i] != s[j]:
+        # The result of this should be true if either side is a palindrome (i.e., one letter was removed and still palindrome)
+        return check_palindrome(s, i + 1, j) or check_palindrome(s, i, j - 1)
+      i += 1
+      j -= 1
+    # If we have checked all our letters and they are equal, then we can just return True
+    return True
+
 # 704. Binary Search
 class Solution:
   # Time complexity: O(log N); You are splitting the input size of the list (nums) in half in each iteration of your while loop
