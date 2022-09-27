@@ -7,7 +7,7 @@ def is_prime(n):
     return False
   
   # O(sqrt(n)) solution - only checks up to integer of sqrt(n); the +1 is to make the range inclusive of n
-  for i in range(2, floor(sqrt(n) + 1)):
+  for i in range(2, math.floor(math.sqrt(n) + 1)):
     if n % i == 0:
       return False
 
