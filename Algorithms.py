@@ -1128,3 +1128,38 @@ def _summing_squares(n, memo):
   memo[n] = min_squares
   # Return memo[n] or min_squares as it has already been calculated
   return memo[n]
+
+# Time complexity: O(amount * coins); We are building a tree with coins as height and amount as width and will have to explore all of the nodes in the tree
+# Space complexity: O(amount * coins); We will store all of the amounts into the memo
+def counting_change(amount, coins):
+  memo = {}
+  return _counting_change(amount, coins, 0, memo)
+
+# Our helper function will take in an index i that will track which coin we are trying to determine the remaining amounts from
+def _counting_change(amount, coins, i, memo):
+  # We create a Python tuple here that will serve as our memo key - we need this because we want to track which amounts and index of coins amounts to the resulting value
+  key = (amount, i)
+  if key in memo:
+    return memo[key]
+
+  # Our function will reduce amount by the currently tracked coin - this will eventually reach zero and return us one way to create the amount with the change
+  if amount == 0:
+    return 1
+
+  # This will serve as a base case - end the function when we finish the possible coins
+  if i == len(coins):
+    return 0
+
+  # This variable will keep track of our total methods to count the change
+  total_count = 0
+  # We are going to track the current coin using the index i argument
+  current_coin = coins[i]
+  # We need to track the remaining amounts when coins are duplicated (i.e., 4 = 1 + 1 + 1 + 1) and other possible options
+  # We have to make sure that the math is range(0, (amount // current_coin) + 1) because the amount needs divided by the current_coin as much as possible; +1 because we need to reach the end of our range (be inclusive)
+  for qty in range(0, (amount // current_coin) + 1):
+    # Track the remaining remainders with every possible quantity of coin
+    remainder = amount - (qty * current_coin)
+    total_count += _counting_change(remainder, coins, i + 1, memo)
+
+  memo[key] = total_count
+  return total_count
