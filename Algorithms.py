@@ -1255,3 +1255,31 @@ def _overlap_subsequence(string_1, string_2, i, j, memo):
     )
 
   return memo[key]
+
+# Time complexity: O(s * words); You will have to explore the string and the words length together at worst
+# Space complexity: O(s); You are only going to store strings that have been "sliced" by the words you iterate through, so the worst space complexity is O(s)
+def can_concat(s, words):
+  return _can_concat(s, words, {})
+
+def _can_concat(s, words, memo):
+  # For string manipulation questions, consider "slicing" the string by the words to see if you can reach the answer; in this case, we must store the sliced strings into our memo
+  if s in memo:
+    return memo[s]
+  
+  # If the string is empty, we know we have successfully found a combination of words that have reached the end of the string and we can return True as our base case
+  if s == '':
+    return True
+  
+  # For each word in words list, we want to check if the current string starts with it
+  for word in words:
+    if s.startswith(word):
+      # If the current string does start with the word, then we just need to check the back-half of the word (excluding the word at the beginning)
+      suffix = s[len(word):]
+      # If we can recursively find words in the string that end up causing the string to go to length 0, then we know we have a true case and can return True after setting the memo as True
+      if _can_concat(suffix, words, memo):
+        memo[s] = True
+        return True
+
+  # Otherwise, we want to return false because we could not find words that reduced the strength to length zero
+  memo[s] = False
+  return False
