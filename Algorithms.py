@@ -1163,3 +1163,31 @@ def _counting_change(amount, coins, i, memo):
 
   memo[key] = total_count
   return total_count
+
+# Time complexity: O(n^2); We will basically be iterating through each number in numbers squared (from 1 to the number) because we have to check if there are any possible combination of moves to reach the end
+# Space complexity: O(n); We only store O(n) results since we are just checking up to the length of numbers
+def array_steppers(numbers):
+  memo = {}
+  # In our helper function, we want to start off at index 0 and find possible routes from the number at index 0
+  return _array_steppers(numbers, 0, memo)
+
+def _array_steppers(numbers, i, memo):
+  # As always, if we have the result already calculated in our memo, we should just return it
+  if i in memo:
+    return memo[i]
+
+  # If i has passed the length of numbers, then we know it was possible to reach the end of the array as we can iterate through anything less than the step
+  if i >= len(numbers) - 1:
+    return True
+  
+  # We set up a max_step that will track the steps possible for the current number, which should be from 1 to the number
+  max_step = numbers[i]
+  # For each step, we just want to make sure that _array_steppers can calculate if there is a possible true value and then return it
+  for step in range(1, max_step + 1):
+    if _array_steppers(numbers, i + step, memo):
+      memo[i] = True
+      return True
+  
+  # If we couldn't find any possible values, then we should just return False
+  memo[i] = False
+  return False
