@@ -1283,3 +1283,38 @@ def _can_concat(s, words, memo):
   # Otherwise, we want to return false because we could not find words that reduced the strength to length zero
   memo[s] = False
   return False
+
+# Time complexity: O(s * words); You will have to explore the string and all combination of words that may add up to the string
+# Space complexity: O(s); You will store all possible combinations of the reduced string so the pace complexity is dependent on only the string
+def quickest_concat(s, words):
+  # We want to set a result variable that will contain our result; this is due to the fact that we may have an infinite integer returned from our helper function if no possible combination is found
+  result = _quick(s, words, {})
+  # We return -1 if we do not find a possible combination; otherwise, we just return our result which should hold the minimum moves to concat to the word
+  if result != float('inf'):
+    return result
+  else:
+    return -1
+
+def _quick(s, words, memo):
+  # Check if we already have calculated for a part of the string before
+  if s in memo:
+    return memo[s]
+  
+  # If we have reached the end of the string, then we know that we found a possible combination and can return 0 to start being added onto
+  if s == '':
+    return 0
+  
+  # Set up a variable that will track the quickest result
+  quickest = float('inf')
+  # For each word in the words list, we check if the string begins with the word and then pass along the remaining string into a recursive call
+  for word in words:
+    if s.startswith(word):
+      suffix = s[len(word):]
+      # We make sure to add 1 to the result of the recursive call in case it finds a result that fits
+      attempt = 1 + _quick(suffix, words, memo)
+      # We overwrite quickest with the fastest attempt
+      quickest = min(attempt, quickest)
+  
+  # Don't forget to set memo[s] to quickest and then return quickest
+  memo[s] = quickest
+  return quickest
