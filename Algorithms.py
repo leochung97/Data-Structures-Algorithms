@@ -1226,3 +1226,32 @@ def _max_palin_subsequence(string, i, j, memo):
   
   # We already set the memo[key] in the previous line s and can just return it
   return memo[key]
+
+# Time complexity: O(n * m); We must iterate through both strings to determine overlapping subsequences
+# Space complexity: O(n * m); We are storing results from both strings so the space complexity will be determined by both sizes
+# Note for this problem, we purposefully choose to use two pointers instead of slicing our arrays as it is more efficient than recreating new arrays with new slices every time
+def overlap_subsequence(string_1, string_2):
+  # We call a helper method that will take in a memo and two pointer variables set at the beginning of each string
+  return _overlap_subsequence(string_1, string_2, 0, 0, {})
+
+def _overlap_subsequence(string_1, string_2, i, j, memo):
+  # For any dynamic programming two pointer questions, you probably want to set up a tuple as a key and then have that tuple serve as the key for your memo
+  key = (i, j)
+  if key in memo:
+    return memo[key]
+
+  # We want to return 0 if we reach the end of either string because we are essentially saying that we do not have any subsequence left to compare to
+  if i == len(string_1) - 1 or j == len(string_2) - 1:
+    return 0
+
+  # If we have a matching character, we need to add one and return another recursive call on the following characters at i + 1 and j + 1
+  if string_1[i] == string_2[j]:
+    memo[key] = 1 + _overlap_subsequence(string_1, string_2, i + 1, j + 1, memo)
+  # If we don't have a matching character, we need to find the max found from skipping a character on either string
+  else:
+    memo[key] = max(
+      _overlap_subsequence(string_1, string_2, i + 1, j, memo),
+      _overlap_subsequence(string_1, string_2, i, j + 1, memo)
+    )
+
+  return memo[key]
