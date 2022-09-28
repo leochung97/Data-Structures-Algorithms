@@ -1422,3 +1422,25 @@ def nesting_score(string):
   
   # We return stack[0] which should now have been revised for a new figure
   return stack[0]
+
+# Time complexity: O(2^n); 
+# Space complexity: O(2^n);
+def subsets(elements):
+  # Have a default base case that will return an empty array
+  if not elements:
+    return [[]]
+  
+  # The first element and the rest of the elements should be set as variables
+  first = elements[0]
+  rest = elements[1:]
+  # We want to recursively call subsets on the rest of the elements and assume that we receive an array containing all of the subsets of the rest of the elements
+  rest_subsets = subsets(rest)
+
+  # We set up an empty first_subset that will continuously append our first element and any subsets afterwards
+  first_subset = []
+  # For each subset returned from our earlier recursive call, we will append it after our first sub_set result
+  for sub in rest_subsets:
+    first_subset.append([first, *sub])
+  
+  # We want to add our first subset and the rest of our subsets because we want to make sure that we have every possible element accounted for
+  return first_subset + rest_subsets
