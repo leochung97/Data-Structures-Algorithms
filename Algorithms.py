@@ -1423,8 +1423,8 @@ def nesting_score(string):
   # We return stack[0] which should now have been revised for a new figure
   return stack[0]
 
-# Time complexity: O(2^n); 
-# Space complexity: O(2^n);
+# Time complexity: O(2^n); For each element in our input array, we will have two possible subsets that will contain the first element and the rest of the elements
+# Space complexity: O(2^n); We are recursively calling subsets on n number of elements so our stack will be 2^n
 def subsets(elements):
   # Have a default base case that will return an empty array
   if not elements:
