@@ -1,5 +1,5 @@
 import math
-from statistics import mean
+import statistics
 
 # is_prime in O(sqrt(n)) time complexity; O(1) space complexity
 def is_prime(n):
@@ -439,7 +439,6 @@ def tree_levels(root):
 
 # This question is basically tree_levels but with an added average - we use the mean function from the statistics library to calculate our average quickly
 from collections import deque
-from statistics import mean
 # Time complexity: O(n); You must go through every node to check the value and add the current level
 # Space complexity: O(n); You are returning a variable holding all of the possible levels of the tree
 def tree_level_averages(root):
@@ -462,7 +461,7 @@ def tree_level_averages(root):
       queue.append((current.right, level_num + 1))
   
   # This is a Pythonic way of writing a map function; you call mean() function on every level in the levels array returned from your while loop
-  return [ mean(level) for level in levels ]
+  return [ statistics.mean(level) for level in levels ]
 
 # This question is deceptive; you need to use depth-first search in order to reach the leaves in order
 # Time complexity: O(n); You must go through every node to check if the node is a leaf node
