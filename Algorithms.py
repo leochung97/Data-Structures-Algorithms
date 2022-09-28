@@ -1318,3 +1318,23 @@ def _quick(s, words, memo):
   # Don't forget to set memo[s] to quickest and then return quickest
   memo[s] = quickest
   return quickest
+
+# Time complexity: O(n); You run through the entirety of the string once so the solution is at worst O(n)
+# Space complexity: O(1); You will only hold a stack / count variable that will track how many valid parentheses there are
+def paired_parentheses(string):
+  # We use a count variable instead of a stack list in this scenario because we are only tracking parentheses - if we used other brackets then a stack would be better
+  count = 0
+  
+  # Iterate through each character in the string and count to the count if we have an open parentheses
+  for char in string:
+    if char == '(':
+      count += 1
+    # Check if we have a closed parentheses that was provided before an open parentheses (i.e., count == 0); if so, then we know we can just return False
+    # Otherwise, we can decrement count because we have a valid parentheses
+    elif char == ')':
+      if count == 0:
+        return False
+      count -= 1
+  
+  # We then just return whether count is 0 or not, indicating that all parentheses (if any) were valid
+  return count == 0
