@@ -1338,3 +1338,31 @@ def paired_parentheses(string):
   
   # We then just return whether count is 0 or not, indicating that all parentheses (if any) were valid
   return count == 0
+
+# Time complexity: O(n); You run through the entire string at least once
+# Space complexity; O(n); At worst, you may store the entire string into the stack
+def befitting_brackets(string):
+  # Create a hashmap that will store all of our brackets - this is most optimal to pull information from as well
+  brackets = {
+    '(': ')',
+    '{': '}',
+    '[': ']'
+  }
+
+  # Create a stack that we will use to cover our brackets
+  stack = []
+
+  for char in string:
+    # If the character is a key in brackets, then we just add the value of that key to our stack
+    if char in brackets:
+      stack.append(brackets[char])
+    else:
+      # If the stack is truthy and its last character is our character, then we can just pop it off
+      if stack and stack[-1] == char:
+        stack.pop()
+      # Otherwise, we know we have reached either that the stack is falsey or it is not our character and thus can return False early
+      else:
+        return False
+  
+  # After we finish our algorithm, want to make sure that the stack is empty - we can do this by checking if the stack is falsey
+  return not stack
