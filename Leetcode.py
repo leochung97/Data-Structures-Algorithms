@@ -112,6 +112,36 @@ class Solution:
     # Return max_sub at the end because that's what we are really looking for
     return max_sub
 
+# 57. Insert Interval
+class Solution:
+  # Time complexity: O(n); We are passing the array once so our worst time complexity is O(n)
+  # Space complexity: O(n); Our output is storing the new array which at worst can be O(n) size
+  def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+    # We set up an i to track the index we are going through and an output to track our results
+    n = len(intervals)
+    i, output = 0, []
+    
+    # In our first while loop, we need to figure out which intervals are not even overlapping with our new interval beginning yet; this can be determined by checking whether the end of an interval is less than our new interval start
+    while i < n and intervals[i][1] < newInterval[0]:
+      output.append(intervals[i])
+      i += 1
+    
+    # Once the first while loop ends, we know that we have found the interval that overlaps with our new interval and must now iterate until we find an interval that does not start before our new interval end
+    while i < n and intervals[i][0] <= newInterval[1]:
+      # As we continuously increment i, we need to continuously reset the new interval start to the minimum of the intervals in between and the maximum of the interval ends
+      newInterval[0] = min(intervals[i][0], newInterval[0])
+      newInterval[1] = max(intervals[i][1], newInterval[1])
+      i += 1
+    # Once we exit out of the previous while loop, we know that we have found our interval and can just append the new one
+    output.append(newInterval)
+    
+    # We are now iterating through the rest of our intervals and just adding whatever we have remaining into our output
+    while i < n:
+      output.append(intervals[i])
+      i += 1
+    
+    return output
+
 # 70. Climbing Stairs
 class Solution:
   # Time complexity: O(n); You must go through n steps to calculate the number of steps
