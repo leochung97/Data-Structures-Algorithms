@@ -1366,3 +1366,36 @@ def befitting_brackets(string):
   
   # After we finish our algorithm, want to make sure that the stack is empty - we can do this by checking if the stack is falsey
   return not stack
+
+# Time complexity: O(9^m * n); m = brace groups, n = regular characters; The algorithm is exponential because you can have as many as 9 numbers be determined by the amount of groups * any number of regular characters
+# Space compelxity: O(9^m * n); Same reason as above - our stack will continuously hold the characters and will thus be exponential
+# It is helpful to draw this problem out as a stack to see what goes into our stack
+def decompress_braces(string):
+  # We can solve this problem using a stack and a set of defined numbers
+  stack = []
+  numbers = '123456789'
+
+  for char in string:
+    # If our character is a number, we just want to add it to our stack - this will eventually be popped off and used to multiply a segment of characters
+    if char in numbers:
+      stack.append(char)
+    else:
+      # If the character is the end of a group of characters, then we need to start tracking a segment that will hold our repeated characters
+      if char == '}':
+        segment = ''
+        # isinstance is a Pythonic way of checking whether the first argument is an instance of the second character
+        # We want to make sure that we are continuously popping off elements until we reach an integer that marks our number to multiply the segment by
+        while not isinstance(stack[-1], int):
+          popped = stack.pop()
+          # When we add the element to the segment, we want to make sure we add the popped first because otherwise it will reverse the characters in the sub-group
+          segment = popped + segment
+        number = stack.pop()
+        # We can multiply the segment by the number to repeat it
+        # We make sure to add it back to our stack
+        stack.append(segment * number)
+      # If our character isn't an open bracket then we can just add it to our stack
+      elif char != '{':
+        stack.append(char)
+  
+  # We return our now completed stack using a ''.join function
+  return ''.join(stack)
