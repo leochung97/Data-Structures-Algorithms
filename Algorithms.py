@@ -1399,3 +1399,27 @@ def decompress_braces(string):
   
   # We return our now completed stack using a ''.join function
   return ''.join(stack)
+
+# Time complexity: O(n); We must go through all of the characters in the string
+# Space complexity: O(n); We may end up storing iterations of each character in the stack
+def nesting_score(string):
+  # We start off with a stack containing 0 because we want our base case to be zero in case there is no stack provided
+  # Note that the [0] will be revised to contain our final answer by our algorithm
+  stack = [0]
+  for char in string:
+    # If our character is an open bracket, we know that we are about to either fill it with more brackets or close it
+    if char == '[':
+      # If we are opening it, we just add onto our stack another 0 value
+      stack.append(0)
+    else:
+      # We check what to do with the character by first popping it off
+      popped = stack.pop()
+      # If the value of our stack is currently at zero, we can add +1 to the new last stack element
+      if popped == 0:
+        stack[-1] += 1
+      # Else if we already had a closed bracket before, then we know that we have to multiply the last closed bracket number by 2 and add it back to our stack
+      else:
+        stack[-1] += 2 * popped
+  
+  # We return stack[0] which should now have been revised for a new figure
+  return stack[0]
