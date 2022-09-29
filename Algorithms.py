@@ -1579,4 +1579,6 @@ def linked_palindrome(head):
     # Make sure to always set current to the next one
     current = current.next
   # Use Python to determine whether values is equal to its reversed list (values[::-1] returns another array that starts from the end and goes to the beginning)
+  # Note that the syntax for slicing an array / reversing it as follows: [start:end:order] -> you can leave out start and end to return the full array in the order that you want (-1 indicates reversed)
   return values == values[::-1]
+  # Note that double equal operator in Python will check if both lists contain the same values and in the same order
