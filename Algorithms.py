@@ -1,5 +1,7 @@
+from itertools import pairwise
 import math
 import statistics
+from collections import deque
 
 # is_prime in O(sqrt(n)) time complexity; O(1) space complexity
 def is_prime(n):
@@ -289,7 +291,6 @@ def depth_first_search(root):
 # deque.appendleft(): Used to insert the value in its argument to the left end of the deque
 # deque.pop(): Used to delete an argument from the right end of the deque
 # deque.popleft(): Used to delete an argument from the left end of the deque
-from collections import deque
 
 # Time complexity: O(n); You must go through each node in the binary tree
 # Space complexity: O(n); Return output depends on the size of the input binary tree
@@ -409,7 +410,6 @@ def all_tree_paths(root):
 
 # Time complexity: O(n); You must go through every node to check the value and add the current level
 # Space complexity: O(n); You are returning a variable holding all of the possible levels of the tree
-from collections import deque
 def tree_levels(root):
   if root is None:
     return []
@@ -438,7 +438,6 @@ def tree_levels(root):
   return levels
 
 # This question is basically tree_levels but with an added average - we use the mean function from the statistics library to calculate our average quickly
-from collections import deque
 # Time complexity: O(n); You must go through every node to check the value and add the current level
 # Space complexity: O(n); You are returning a variable holding all of the possible levels of the tree
 def tree_level_averages(root):
@@ -1495,3 +1494,38 @@ def create_combinations(items, k):
 
   # We then return both combinations concatenated - this will return a combined list of combinations that are length k
   return first_combos + remaining_combos
+
+# n = string length
+# m = max group size
+# Time complexity: O(m ^ n); Your group size can be arbitrarily large and the string length within the group can also be arbitrarily large
+# Space complexity: O(m ^ n); You must store all of the results of O(m ^ n) size into an array as a result
+def parenthetical_possibilities(s):
+  # If our string reaches a length of zero, we cannot find any possiblities and should just return an empty string as our base case output
+  if len(s) == 0:
+    return ['']
+
+  # We set up an array containing all of our possibilities - we will fill this array and return it with the answer
+  all_possibilities = []
+  # We deconstruct the choices and the remainder found by the find_choices helper function
+  choices, remainder = find_choices(s)
+  # Now for each choice that we have within a group of characters, we create branching trees that will look into each choice and add the possibilites of recursive calls onto it
+  for choice in choices:
+    # This is our recursive leap of faith - we assume that recursively calling parenthetical possibilities will return the rest of the possibilities
+    remainder_possibilities = parenthetical_possibilities(remainder)
+    # For each possibility, we want to add the choice to the front of it and then append that result
+    all_possibilities += [choice + possibility for possibility in remainder_possibilities]
+  
+  # Don't forget to return all the possibilities we found
+  return all_possibilities
+  
+# We create a helper function that will determine whether we are approaching a group of characters - if we are, we will return a tuple containing the choices in the group and the remaining characters in the string
+def find_choices(str):
+  if str[0] == '(':
+    end = str.index(')')
+    choices = str[1:end]
+    remainder = str[end + 1:]
+    return (choices, remainder)
+  else:
+    # Otherwise, we will just return the first character as a "choice" and the remainder of the string
+    return (str[0], str[1:])
+  
