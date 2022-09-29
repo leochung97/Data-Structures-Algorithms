@@ -1,4 +1,3 @@
-from itertools import pairwise
 import math
 import statistics
 from collections import deque
@@ -1528,4 +1527,40 @@ def find_choices(str):
   else:
     # Otherwise, we will just return the first character as a "choice" and the remainder of the string
     return (str[0], str[1:])
+
+# n = number of words in the sentence
+# m = max number of synonyms for each word
+# Time complexity: O(m ^ n); We may potentially have a synonym for each word in the sentence and thus we should be O(m ^ n) times at worst
+# Space complexity: O(m ^ n); We must store all of the potential results (synonym for each word in the sentence) so our space complexity is also O(m ^ n)
+def substitute_synonyms(sentence, synonyms):
+  # First we split the words up into a list
+  words = sentence.split(' ')
+  # We pass the words into our helper function - we assume that the helper function will return subarrays containing all of the possible combinations of the sentence using each synonym for each word in synonyms
+  subarrays = generate(words, synonyms)
+  # We join all of the results back together for each subarray in the resulting subarrays
+  return [' '.join(subarray) for subarray in subarrays]
+
+def generate(words, synonyms):
+  # We must start off with our base case which is that words will be of length 0 and we should thus return an empty list
+  # Since our base is on the length of words, we should assume that we will decrement words length after every recursive call
+  if len(words) == 0:
+    return [[]]
+
+  # Set the first and remaining words and variables
+  first_word = words[0]
+  remaining = words[1:]
+  # Assume that we can recursively call and receive the remaining words' subarrays
+  subarrays = generate(remaining, synonyms)
   
+  # We then check the first word to see if it matches a word in synonyms
+  if first_word in synonyms:
+    # If there is a word in synonyms, then we need to return a result that contains all of the results using synonym words
+    result = []
+    # For each synonym, we also recursively call upon subarray in subarrays to make sure that we assuring for other words in the remaining sentence with synonyms
+    for synonym in synonyms[first_word]:
+      result += [[synonym, *subarray] for subarray in subarrays]
+    # All of our results should we stored within the results array so we can return it
+    return result
+  else:
+    # Otherwise, we know that there are no other possibilities for the first word and should just return it along with the rest of the subarray results
+    return [[first_word, *subarray] for subarray in subarrays]
