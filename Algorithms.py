@@ -1598,3 +1598,24 @@ def middle_value(head):
     fast = fast.next.next
   # We just have to return slow.val since we know that it is currently at the middle of the linked list
   return slow.val
+
+# This is the same as Leetcode #141 - Linked List Cycle; we are using Floyd's Cycle Detection Algorithm in both answers
+# Similar to middle_value, we can find two possible solutions; either by using a set to track nodes that we have already seen or by using two pointers
+# Time complexity: O(n); Since our fast pointer is traveling at twice the speed of the slow algorithm, at worst our slow pointer will have reached the end of the linked list once before it is "caught" by the fast pointer
+# Space complexity: O(1); We are using constant space to keep track of our pointers
+def linked_list_cycle(head):
+  # Set up a slow and fast pointer
+  slow = head
+  fast = head
+  
+  # While fast is not reaching a null node, we can continuously go through the linked list
+  while fast and fast.next:
+    # We first move the pointers to the next and next next nodes, respectively, for slow and fast
+    slow = slow.next
+    fast = fast.next.next
+    # Then we determine whether fast has caught up to node and is the same value - if it is, then we have a cycle and just return True
+    if slow == fast:
+      return True
+  
+  # If we exit out of the while loop, then fast must have hit a null node and thus is not a cycle
+  return False
