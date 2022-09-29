@@ -1468,3 +1468,30 @@ def permutations(items):
   
   # Return the result containing all of the permutations
   return result
+
+# Time complexity: O(n! / k!(n-k)!) or (O("n choose k")); Binomial coefficient
+# Space complexity: O(n! / k!(n-k)!) or (O("n choose k")); Binomial coefficient
+# We can also solve this greedily using subsets and then finding all results of length k but this solution is more elegant and more efficient
+def create_combinations(items, k):
+  # If the length of our items is shorter than our k, then we know we cannot make combos of k length and should just return an empty array
+  if len(items) < k:
+    return []
+  
+  # If k == 0, we have reached the end of our results and should just return an empty array containing an empty list
+  if k == 0:
+    return [[]]
+  
+  # Similarly to other exhaustive recursion problems, we can take out the first item and set up an array that will contain our first element's combinations
+  first = items[0]
+  first_combos = []
+  # We want to begin populating our first_combos array with the results of items after the first element and k - 1
+  # We do k - 1 because we will want to return results that will be of length k - 1 since we are adding back the first element (to be size k in total)
+  for combo in create_combinations(items[1:], k - 1):
+    # This will continuously create combinations of size k
+    first_combos.append([first, *combo])
+  
+  # We then call the function on every item afterwards to see if we can find any other combination of length k
+  remaining_combos = create_combinations(items[1:], k)
+
+  # We then return both combinations concatenated - this will return a combined list of combinations that are length k
+  return first_combos + remaining_combos
