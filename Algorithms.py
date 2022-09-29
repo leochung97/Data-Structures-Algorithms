@@ -1582,3 +1582,19 @@ def linked_palindrome(head):
   # Note that the syntax for slicing an array / reversing it as follows: [start:end:order] -> you can leave out start and end to return the full array in the order that you want (-1 indicates reversed)
   return values == values[::-1]
   # Note that double equal operator in Python will check if both lists contain the same values and in the same order
+
+# We have two possible solutions here: we can use a list to track all of the values and take the middle index or we can use two pointers to determine the middle value; the two pointers method is more efficient in terms of space complexity
+# Time complexity: O(n); We must iterate through the entire linked list to determine the midpoint value
+# Space complexity: O(1); We are not storing any variables that are reliant on the input size
+def middle_value(head):
+  # Set up two pointers, a slow and fast pointer that will track the progress of each node
+  slow = head
+  fast = head
+  # We have to check whether fast is currently not None and also when fast.next is current not None - this is because we are taking two steps at a time and can risk skipping too far ahead into a null node
+  while fast is not None and fast.next is not None:
+    # The fast node will take two steps at a time while the slow node will take only one step at a time
+    # Since fast node is going twice as fast and will eventually reach the end of the linked list faster than the slow one, we know that wherever slow ends up is the middle of the linked list
+    slow = slow.next
+    fast = fast.next.next
+  # We just have to return slow.val since we know that it is currently at the middle of the linked list
+  return slow.val
