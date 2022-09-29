@@ -1445,8 +1445,8 @@ def subsets(elements):
   # We want to add our first subset and the rest of our subsets because we want to make sure that we have every possible element accounted for
   return first_subset + rest_subsets
 
-# Time complexity: O(n!); 
-# Space complexity: O(n!); 
+# Time complexity: O(n!); For n distinct items, there are n! permutations that are returned as the answer so we have at least O(n!) time complexity
+# Space complexity: O(n!); We are returning an array of results containing our permutations of n! results so our space complexity will also be O(n!)
 def permutations(items):
   # This is our base case; we want to return an empty array if we have nothing left in our items
   if not items:
