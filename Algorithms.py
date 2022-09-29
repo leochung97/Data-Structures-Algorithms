@@ -1444,3 +1444,27 @@ def subsets(elements):
   
   # We want to add our first subset and the rest of our subsets because we want to make sure that we have every possible element accounted for
   return first_subset + rest_subsets
+
+# Time complexity: O(n!); 
+# Space complexity: O(n!); 
+def permutations(items):
+  # This is our base case; we want to return an empty array if we have nothing left in our items
+  if not items:
+    return [[]]
+
+  # Select our first letter of the array -  we will "insert" this into our permutations
+  first = items[0]
+  remaining = items[1:]
+  # Assume that the recursive call will return a list containing all other combinations
+  perms = permutations(remaining)
+  # We have a result array that will contain all of our possible permutations
+  result = []
+  # For each permutation, we are going to go through the range of the permutation and insert our first element into each spot
+  for perm in perms:
+    # Make sure we add + 1 to the range so we can insert the first element into the end of our range as well
+    for i in range(len(perm) + 1):
+      # Then we append every result of the permutation before and after the first element is inserted
+      result.append([*perm[:i], first, *perm[i:]])
+  
+  # Return the result containing all of the permutations
+  return result
