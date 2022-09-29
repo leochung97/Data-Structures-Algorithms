@@ -1564,3 +1564,19 @@ def generate(words, synonyms):
   else:
     # Otherwise, we know that there are no other possibilities for the first word and should just return it along with the rest of the subarray results
     return [[first_word, *subarray] for subarray in subarrays]
+
+# Time complexity: O(n); We are going through each node in the linked list
+# Space complexity: O(n); We are storing each node's value in the linked list and then comparing it to the reversed version of itself to check for palindrome
+def linked_palindrome(head):
+  # Set up a list of values that will be reversed and checked later on
+  values = []
+  # Set up a current node that will track the node's value
+  current = head
+  # Use falsey to check whether current is not None
+  while current:
+    # Append every value into our values array so that we know whether or not the reversed version will be a palindrome
+    values.append(current.val)
+    # Make sure to always set current to the next one
+    current = current.next
+  # Use Python to determine whether values is equal to its reversed list (values[::-1] returns another array that starts from the end and goes to the beginning)
+  return values == values[::-1]
