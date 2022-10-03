@@ -368,6 +368,22 @@ class Solution:
       else:
         return node
 
+# 236. Lowest Common Ancestor of a Binary Tree
+# Time complexity: O(n); We must iterate through every node in the tree to determine the lowest common ancestor
+# Space complexity: O(n); We are using a recursive call which will have us use a stack of at worst O(n)
+class Solution:
+  # This is a very simple recursive function that will solve for the lowest common ancestor of both p and q
+  def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+    # if root is None, p, or q, we should just return it
+    if root in (None, p, q ):
+      return root
+
+    # Otherwise, we set up a left and right pathway that looks for p and q in its left / right nodes
+    left, right = (self.lowestCommonAncestor(kid, p, q) for kid in (root.left, root.right))
+    # If left and right both return a root value (not a None), then we know that our path has been found and we can return it
+    # Otherwise, we must go into either left or right to determine which has both ancestors
+    return root if left and right else left or right
+
 # 242. Valid Anagram
 class Solution:
   # Time complexity: O(n); You must traverse both strings whose length is n each

@@ -1620,6 +1620,7 @@ def linked_list_cycle(head):
   # If we exit out of the while loop, then fast must have hit a null node and thus is not a cycle
   return False
 
+# This problem is similar to Leetcode #236 Lowest Common Ancestor of a Binary Tree; The major difference is that 
 # Time complexity: O(n); We must iterate through every node in the binary tree to determine the ancestor
 # Space complexity: O(n); We are using recursion to go through each node in our tree, so our implicit stack will be O(n) space complexity
 def lowest_common_ancestor(root, val1, val2):
