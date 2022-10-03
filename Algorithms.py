@@ -1619,3 +1619,40 @@ def linked_list_cycle(head):
   
   # If we exit out of the while loop, then fast must have hit a null node and thus is not a cycle
   return False
+
+# Time complexity: O(n); We must iterate through every node in the binary tree to determine the ancestor
+# Space complexity: O(n); We are using recursion to go through each node in our tree, so our implicit stack will be O(n) space complexity
+def lowest_common_ancestor(root, val1, val2):
+  # The root will have two possible paths - we just need to find paths for both val1 and val2; these paths represent the ancestry of both values
+  path1 = find_path(root, val1)
+  path2 = find_path(root, val2)
+  # We create a set of path2 since we are going to continuously check its elements for a matching element; we use a set for constant time complexity
+  # If we used an array, it would still result in the answer but it would be O(n^2) time complexity
+  set2 = set(path2)
+  for val in path1:
+    if val in set2:
+      return val
+  
+def find_path(root, target_val):
+  # If the root is None, then we have reached the end of the tree
+  if root is None:
+    return None
+  
+  # If we have reached the target value, then we know that this is a possible path and we can just return the root value for now
+  if root.val == target_val:
+    return [ root.val ]
+  
+  # We then recursively check if any of paths contain our target value; if we find it, we want to append our current root.val so that its value is noted as a pathway
+  left_path = find_path(root.left, target_val)
+  if left_path is not None:
+    left_path.append(root.val)
+    # Then we return the path because we know we found a possible area
+    return left_path
+  
+  right_path = find_path(root.right, target_val)
+  if right_path is not None:
+    right_path.append(root.val)
+    return right_path
+  
+  # Otherwise, if we found nothing in either path, then we can just return None
+  return None
