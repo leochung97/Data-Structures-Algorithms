@@ -1657,3 +1657,17 @@ def find_path(root, target_val):
   
   # Otherwise, if we found nothing in either path, then we can just return None
   return None
+
+# Time complexity: O(n); We are going through every node to determine if there is a child to flip
+# Space complexity: O(n); We are using a recursive call so we have an implicit stack of O(n) space complexity at worst
+def flip_tree(root):
+  # If we reach a None node, we can just return None as our base case
+  if root is None:
+    return None
+
+  # Set up a recursive call assuming that the tree will flip
+  left, right = flip_tree(root.left), flip_tree(root.right)
+  # Then set your root.left and root.right to the right and left, respectively, to flip the nodes
+  root.left, root.right = right, left
+  # This is all done in place so you should be able to just return your root
+  return root
