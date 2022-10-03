@@ -1671,3 +1671,24 @@ def flip_tree(root):
   root.left, root.right = right, left
   # This is all done in place so you should be able to just return your root
   return root
+
+# Time complexity: O(n); We must traverse every node to determine whether it is left or not
+# Space complexity: O(n); We are recursively solving the solution so we use an implicit stack of O(n) worst space complexity
+def lefty_nodes(root):
+  values = []
+  # We use a helper function to traverse our root at each level - it will add to values only the leftmost value
+  traverse(root, 0, values)
+  return values
+
+def traverse(root, level, values):
+  # If root is None, we just want to stop the function
+  if root is None:
+    return
+  
+  # If the length of values is equal to the level, we should add the root value - this will only add the left-most root value
+  if len(values) == level:
+    values.append(root.val)
+
+  # We then recursively call upon traverse to go through each possible level
+  traverse(root.left, level + 1, values)
+  traverse(root.right, level + 1, values)
