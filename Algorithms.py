@@ -1692,3 +1692,24 @@ def traverse(root, level, values):
   # We then recursively call upon traverse to go through each possible level
   traverse(root.left, level + 1, values)
   traverse(root.right, level + 1, values)
+
+def can_color(graph):
+  coloring = {}
+  for node in graph:
+    if node not in coloring:
+      if not valid(graph, node, coloring, False):
+        return False
+  
+  return True
+  
+def valid(graph, node, coloring, current_color):
+  if node in coloring:
+    return current_color == coloring[node]
+  
+  coloring[node] = current_color
+  
+  for neighbor in graph[node]:
+    if not valid(graph, neighbor, coloring, not current_color):
+      return False
+  
+  return True
