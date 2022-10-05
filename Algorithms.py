@@ -1693,23 +1693,33 @@ def traverse(root, level, values):
   traverse(root.left, level + 1, values)
   traverse(root.right, level + 1, values)
 
+# Time complexity: O(n^2); At worse, we may have to travel through every node twice
+# Space complexity: O(n); We use a stack to recursively check each neighbor and we use a hashmap to contain each node's "color"
 def can_color(graph):
+  # In this case, we want to use a hashmap to store our node's "colors", which will be represented by True and False
   coloring = {}
+  # For each node in the graph, we want to check if the node is NOT already registered in our coloring hashmap
   for node in graph:
     if node not in coloring:
+      # If the node is NOT registered, then we can check if it is valid by coloring it False first
       if not valid(graph, node, coloring, False):
         return False
   
   return True
   
+# Our helper function will check if the node is in coloring hashmap and return its color
 def valid(graph, node, coloring, current_color):
   if node in coloring:
     return current_color == coloring[node]
   
+  # If not in coloring, then we can set its current color
   coloring[node] = current_color
   
+  # Then we want to recursively check its neighbors 
   for neighbor in graph[node]:
+    # We make sure to flip the color by using not current_color
     if not valid(graph, neighbor, coloring, not current_color):
       return False
   
+  # If everything works, then we know that we have just set each color to an alternate and can return true at the end
   return True
