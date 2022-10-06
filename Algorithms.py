@@ -1764,3 +1764,45 @@ def build_graph(rivalries):
     graph[second].append(first)
     
   return graph
+
+# Time complexity: O(n^2); Since our graph is undirected, we must explore all available routes twice to determine whether there are unique routes
+# Space complexity: O(n); We are setting up a visited set that will contain all of the visited nodes, so at worst we will have all nodes or O(n)
+def rare_routing(n, roads):
+  # We must build our graph first out of the roads that we have
+  graph = build_graph(n, roads)
+  # We must have a visited set that will contain all of the nodes that we have already explored
+  visited = set()
+  # We use a helper function starting with the graph we created, node 0, the visited set, and a None to represent the last node that we visited
+  traversed = traverse(graph, 0, visited, None)
+# Traversed will return a boolean that checks whether there are unique routes - we also check if the length of the visited set is the same as the number of cities; this is because we must have ONE path to each city - if the city is not connected to 0 then we do not have a path!
+  return traversed and len(visited) == n
+
+def traverse(graph, node, visited, last_node):
+  # If we already have the node, return False
+  if node in visited:
+    return False
+  
+  # Make sure to add the node to visited afterwards
+  visited.add(node)
+  # First part of our if statement prevents us from traveling backwards on a path
+  # Second part determines whether we have traveled the path and came across an already explored path, which means we have MORE than one path to that node
+  for neighbor in graph[node]:
+    if neighbor != last_node and not traverse(graph, neighbor, visited, node):
+      return False
+  
+  # If neither of the above are true, then we can return True
+  return True
+  
+def build_graph(n, roads):
+  # Since we know the number of cities in our problem and our nodes are labeled using numbers starting from 0 to n, we can enumerate using the range(n) to set up neighbors for each node
+  graph = {}
+  
+  for i in range(n):
+    graph[i] = []
+  
+  for road in roads:
+    a, b = road
+    graph[a].append(b)
+    graph[b].append(a)
+  
+  return graph
