@@ -1723,3 +1723,44 @@ def valid(graph, node, coloring, current_color):
   
   # If everything works, then we know that we have just set each color to an alternate and can return true at the end
   return True
+
+# Time complexity: O(e); You must travel through every edge provided in the problem so the time complexity will be O(e)
+# Space complexity: O(n); You must store every node that has been traveled to with a "color", so the space complexity will be O(n)
+# This problem is very similar to our can_color; we just need to build our graph and then check if we have rivalries that will overlap
+def tolerant_teams(rivalries):
+  # Build the graph first using our traditional helper function that takes in edges (rivalries) and spits out a graph in the form of a hashmap
+  graph = build_graph(rivalries)
+  
+  coloring = {}
+  for node in graph:
+    if node not in coloring and not is_bipartite(graph, node, coloring, False):
+      return False
+    
+  return True
+
+def is_bipartite(graph, node, coloring, current_color):
+  if node in coloring:
+    return coloring[node] == current_color
+  
+  coloring[node] = current_color
+  
+  for neighbor in graph[node]:
+    if not is_bipartite(graph, neighbor, coloring, not current_color):
+      return False
+    
+  return True
+
+def build_graph(rivalries):
+  # This is an undirected graph whose neighbors can point to each other
+  graph = {}
+  for pair in rivalries:
+    first, second = pair
+    if first not in graph:
+      graph[first] = []
+    if second not in graph:
+      graph[second] = []
+    
+    graph[first].append(second)
+    graph[second].append(first)
+    
+  return graph
