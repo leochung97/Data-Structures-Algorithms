@@ -419,6 +419,30 @@ class Solution:
     # If no falses, then we should be good
     return True
 
+# 392. Is Subsequence
+class Solution:
+  # Time complexity: O(t); At worst, we will go through all of string t
+  # Space complexity: O(1); We use constant space to track our pointers
+  def isSubsequence(self, s: str, t: str) -> bool:
+    # If string s is shorter than string t, then there is no way that string s will be a subsequence of string t
+    if len(s) > len(t):
+      return False
+    
+    # If string s is length 0 or non-existent, then it is automatically a subsequence of string t (can just delete all characters)
+    if len(s) == 0:
+      return True
+    
+    subsequence = 0
+    # We set our first pointer, i, to track the characters at index i of string t
+    for i in range(len(t)):
+      # If the subsequence is currently less than the length of string s and the current character we are looking at matches, then we can add 1 to subsequence
+      # Subsequence tracks the order and characters of string s - if we go in order and find that we contain all of the characters from string t, we know that string s is a valid subsequence
+      if subsequence <= len(s) - 1 and s[subsequence] == t[i]:
+        subsequence += 1
+    
+    # We just check at the end if we have reached the length of string s, aka checked every character
+    return subsequence == len(s)
+
 # 409. Longest Palindrome
 class Solution:
   # Time complexity: O(n); You must go through each character in the input string to store into the set
