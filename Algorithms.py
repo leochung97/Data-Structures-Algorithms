@@ -1876,3 +1876,40 @@ def _positioning_plants(costs, pos, last_plant, memo):
   # Make sure to set the result as a memo[key] so that we can return it later if required
   memo[key] = min_cost
   return min_cost
+
+# Time complexity: O(m * n * k); At worst, we may go through the size of the row (m) and column (n) but only up to k moves, so our time complexity is O(mnk)
+# Space complexity: O(m * n * k); Since we are using a memo to store our results, our worst space complexity will be O(mnk) as well
+def breaking_boundaries(m, n, k, r, c):
+  # Use a helper function with a memo
+  return _breaking_boundaries(m, n, k, r, c, {})
+
+def _breaking_boundaries(m, n, k, r, c, memo):
+  # Our k (number of moves) and our current row / column position will
+  key = (k, r, c)
+  if key in memo:
+    return memo[key]
+
+  # Check if we have reached the outer bounds of m and n - if we have, then we know that we have broken the boundary and can return 1
+  row_inbounds = 0 <= r < m
+  col_inbounds = 0 <= c < n
+  if not row_inbounds or not col_inbounds:
+    return 1
+
+  # If k is 0, then we have run out of moves and should just return 0
+  if k == 0:
+    return 0
+
+  # Set up a count that will track our count
+  count = 0
+  # Set up a list containing tuples of deltas that we will deconstruct and use for our next moves
+  deltas = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+  for delta in deltas:
+    # Deconstruct the delta
+    d_row, d_col = delta
+    # Count should add the next position
+    count += _breaking_boundaries(m, n, k - 1, r + d_row, c + d_col, memo)
+
+  # Make sure to store the count in our memo in case we go back to the position
+  memo[key] = count
+  # Return count
+  return count
