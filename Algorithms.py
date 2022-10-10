@@ -1843,3 +1843,34 @@ def _max_increasing_subseq(numbers, i, previous, memo):
   memo[key] = max(options)
   # In Python, you can just use max() on a list to determine the highest value - in this case we want the highest max_increasing_subset resulting from dont_take_current and take_current
   return memo[key]
+
+# Time complexity: O(nm); We must iterate through every position and its cost to check whether it is the best combination
+# Space complexity: O(nm); Since we are storing our results in a memo, we may at worst store all of our results in the memo
+def positioning_plants(costs):
+  # We return a value using a helper function that will take in the original costs argument, a 0 representing the initial position we are determining, a None argument which will represent the last_plant that we looked at, and a hashmap for our memo
+  return _positioning_plants(costs, 0, None, {})
+
+def _positioning_plants(costs, pos, last_plant, memo):
+  # Since our position and last_plant arguments will change, we use a tuple to store their values in our mmeo
+  key = (pos, last_plant)
+  # Check first if we already have the result in our memo and return it
+  if key in memo:
+    return memo[key]
+
+  # If our position has reached the length of costs, then we know we are past our last position and should return 0
+  if pos == len(costs):
+    return 0
+
+  # Set up a variable that will determine the minimum cost of the plants - we set it initially to float('inf') so that it is arbitrarily large
+  min_cost = float('inf')
+
+  # For each plant (position / index) and cost (element value), check first that the plant isn't the same as the last_plant (position) that we already confirmed and then check if it is a possible candidate
+  for plant, cost in enumerate(costs[pos]):
+    # Since we don't want to have a plant adjacent to its previous spot - we need to check if plant != last_plant (represents the index value within each costs subarray)
+    if plant != last_plant:
+      # The candidate variable will recursively check all of the possible plants, their costs, and also determine whether the plant is not adjacent to its previous plant
+      candidate = cost + _positioning_plants(costs, pos + 1, plant, memo)
+      min_cost = min(candidate, min_cost)
+
+  memo[key] = min_cost
+  return min_cost
