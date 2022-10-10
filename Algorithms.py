@@ -1806,3 +1806,40 @@ def build_graph(n, roads):
     graph[b].append(a)
   
   return graph
+
+# Time complexity: O(n^2); Normally the solution would be 2^n because for every numbers we find a subset that includes the current number and a subset that excludes it - since we are memoizing we only use O(n^2) instead
+# Space complexity: O(n^2); We are memoizing all of the possible subsets that we are iterating through so we only go through O(n^2) space complexity at worst
+def max_increasing_subseq(numbers):
+  return _max_increasing_subseq(numbers, 0, float('-inf'), {})
+
+def _max_increasing_subseq(numbers, i, previous, memo):
+  # Our i and previous arguments will be changing per iteration so we must use those as our keys (stored in a Python tuple)
+  key = (i, previous)
+  
+  # If we already have the key, we can return it
+  if key in memo:
+    return memo[key]
+  
+  # We know that if we reach the length of our input array, we have reached the end and should thus return
+  if i == len(numbers):
+    return 0
+  
+  # We want to check our current number
+  current = numbers[i]
+  # We create an options list to check which subsets will contain the max - we do this later
+  options = []
+  # We set a variable that will result in the answer of whatever the next subset doesn't take
+  dont_take_current = _max_increasing_subseq(numbers, i + 1, previous, memo)
+  # We also add that result to our options to determine which is better
+  options.append(dont_take_current)
+  # If our current is greater than our previous (which starts at float('-inf))
+  if current > previous:
+    # Then we will set our take_current variable as +1 and use our current as the next "previous" argument
+    take_current = 1 + _max_increasing_subseq(numbers, i + 1, current, memo)
+    # We also want to add this result to options so we can tell whether it will be the maximum number of not
+    options.append(take_current)
+  
+  # Make sure to store our answer as a memo[key] so that we can return it
+  memo[key] = max(options)
+  # In Python, you can just use max() on a list to determine the highest value - in this case we want the highest max_increasing_subset resulting from dont_take_current and take_current
+  return memo[key]
