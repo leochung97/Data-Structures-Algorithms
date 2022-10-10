@@ -1870,7 +1870,9 @@ def _positioning_plants(costs, pos, last_plant, memo):
     if plant != last_plant:
       # The candidate variable will recursively check all of the possible plants, their costs, and also determine whether the plant is not adjacent to its previous plant
       candidate = cost + _positioning_plants(costs, pos + 1, plant, memo)
+      # We keep checking the minimum cost and setting it lower if the candidate is better
       min_cost = min(candidate, min_cost)
 
+  # Make sure to set the result as a memo[key] so that we can return it later if required
   memo[key] = min_cost
   return min_cost
