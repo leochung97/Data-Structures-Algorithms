@@ -1913,3 +1913,28 @@ def _breaking_boundaries(m, n, k, r, c, memo):
   memo[key] = count
   # Return count
   return count
+
+# Time complexity: O(n logn); It is O(n) to run the merge helper function while it is O(logn) to run merge on the left_sorted and right_sorted paths - these are basically cutting the input array down in half each iteration
+# Space complexity: O(n); We store our argument in data structures like a deque and a list
+def merge_sort(nums):
+  if len(nums) <= 1:
+    return nums
+  
+  middle = (len(nums) // 2)
+  left_sorted = merge_sort(nums[:middle])
+  right_sorted = merge_sort(nums[middle:])
+  return merge(left_sorted, right_sorted)
+
+def merge(list1, list2):
+  list1 = deque(list1)
+  list2 = deque(list2)
+  
+  merged = []
+  while list1 and list2:
+    if list1[0] < list2[0]:
+      merged.append(list1.popleft())
+    else:
+      merged.append(list2.popleft())
+  merged += list1
+  merged += list2
+  return merged
