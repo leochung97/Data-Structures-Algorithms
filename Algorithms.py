@@ -1917,24 +1917,33 @@ def _breaking_boundaries(m, n, k, r, c, memo):
 # Time complexity: O(n logn); It is O(n) to run the merge helper function while it is O(logn) to run merge on the left_sorted and right_sorted paths - these are basically cutting the input array down in half each iteration
 # Space complexity: O(n); We store our argument in data structures like a deque and a list
 def merge_sort(nums):
+  # We can just return nums if its only 1 or less in length since there is nothing else to sort it with
   if len(nums) <= 1:
     return nums
   
+  # We merge_sort nums[:middle] and nums[middle:] to get the left and right part of the original nums
+  # Note that we call merge_sort and not merge! We are only merging at the end!
   middle = (len(nums) // 2)
   left_sorted = merge_sort(nums[:middle])
   right_sorted = merge_sort(nums[middle:])
   return merge(left_sorted, right_sorted)
 
 def merge(list1, list2):
+  # We use collections deque to lower our time complexity - we are popping elements off of the front which requires a deque to do so in constant time
   list1 = deque(list1)
   list2 = deque(list2)
   
+  # Our merged array will contain the merged results and will be returned in our recursive stack
   merged = []
+  # While both lists exist and are truthy
   while list1 and list2:
+    # Check the first elements of each
     if list1[0] < list2[0]:
+      # Append the lesser one to our merged array
       merged.append(list1.popleft())
     else:
       merged.append(list2.popleft())
+  # Then add the rest of list1 and list2 - this ensures that whatever is left is still added
   merged += list1
   merged += list2
   return merged
