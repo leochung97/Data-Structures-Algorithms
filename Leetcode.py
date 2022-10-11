@@ -112,6 +112,34 @@ class Solution:
     # Return max_sub at the end because that's what we are really looking for
     return max_sub
 
+# 56. Merge Intervals
+class Solution:
+  # Time complexity: O(n logn); We use a sort to then do a one-pass through
+  # Space complexity: O(n); We are using variable combined to store our merged intervals so our solution could be at worst O(n) in case nothing gets merged
+  def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+    # Sort the input intervals by each element's starting time (x[0])
+    sorted_intervals = sorted(intervals, key=lambda x: x[0])
+    # Create a combined interval that will store our results - input the first sorted interval
+    combined = [ sorted_intervals[0] ]
+    
+    # Starting from the second element of sorted_intervals...
+    for current_interval in sorted_intervals[1:]:
+      # We deconstruct the last added interval
+      last_start, last_end = combined[-1]
+      # We also deconstruct the current interval that we are looking at
+      current_start, current_end = current_interval
+      # We check if the current start is less than or equal to the last interval's ending value - if it is, then we know that there is an intersecting interval
+      if current_start <= last_end:
+        # However, we need to check if this is the only interval that we need to check, so we need to check if the current end is greater than the last end - if it is, then we know that the new interval should just be last_start, current_end
+        if current_end > last_end:
+          # We replace the last interval
+          combined[-1] = [last_start, current_end]
+      else:
+        # Otherwise, if we don't have an intersecting interval, we can just add it to our combined intervals
+        combined.append(current_interval)
+    
+    return combined
+
 # 57. Insert Interval
 class Solution:
   # Time complexity: O(n); We are passing the array once so our worst time complexity is O(n)
