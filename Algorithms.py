@@ -1947,3 +1947,29 @@ def merge(list1, list2):
   merged += list1
   merged += list2
   return merged
+
+# This is also problem 56. Merge Intervals on Leetcode
+# Time complexity: O(n logn); We are sorting the intervals here so we can go through the rest of the solution in a one-pass
+# Space complexity: O(n); We are returning the array in a combined result that contains our array - we thus use O(n) since our variable combined will be the same input size
+def combine_intervals(intervals):
+  # First we sort our intervals array by the starting times, or x[0] for each interval
+  sorted_intervals = sorted(intervals, key=lambda x: x[0])
+  # Then we create a combined array that will contain just the first sorted interval - this will essentially act as our "first" array that we will check every other array with
+  combined = [ sorted_intervals[0] ]
+  
+  # For every current_interval in our sorted_intervals starting from the second element onward (remember, we are comparing subsequent elements against the first one for now)
+  for current_interval in sorted_intervals[1:]:
+    # We deconstruct the last added interval (last_start, last_end from combined[-1]) and we deconstruct the current_interval that we are checking
+    last_start, last_end = combined[-1]
+    current_start, current_end = current_interval
+    # If the current_start is less than or equal to the last_end, then we know we have an intersecting interval and we need to determine when to add that interval to our combined
+    if current_start <= last_end:
+      # If the current_end is also greater than our last end, then we know that we have ended the interval and can thus combine it / replace our last element of the combined with the new interval
+      if current_end > last_end:
+        combined[-1] = (last_start, current_end)
+    else:
+      # If we don't have an intersecting interval, then we can just append the current_interval since it isn't up for consideration
+      combined.append(current_interval)
+    
+  # Then we return combined
+  return combined
