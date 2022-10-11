@@ -1973,3 +1973,24 @@ def combine_intervals(intervals):
     
   # Then we return combined
   return combined
+
+# Time complexity: O(logn); We effectively split the search in half since we know where to look in a sorted array
+# Space complexity: O(1); We will have constant space complexity
+def binary_search(numbers, target):
+  # Set two pointers that will track our indexes
+  low = 0
+  high = len(numbers) - 1
+  # While low is less than or equal to the highest (we want to make sure it's <= because we need to check if we need to check if it is the middle)
+  while low <= high:
+    middle = (low + high) // 2
+    # If the target is less than the value in the middle, then we know that it is in the left half of the current window that we are checking and should slide high - 1
+    if target < numbers[middle]:
+      high = middle - 1
+    # Else if the target is greater than the value in the middle of our window, we can slide low + 1
+    elif target > numbers[middle]:
+      low = middle + 1
+    # Otherwise if we found our target, we can just return its value
+    else:
+      return middle
+  # However, if we continuously slide our function and don't find anything, we can return -1
+  return -1
