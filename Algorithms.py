@@ -2117,3 +2117,26 @@ def _build_tree_in_pre(in_order, pre_order, in_start, in_end, pre_start, pre_end
   root.right = _build_tree_in_pre(in_order, pre_order, mid + 1, in_end, pre_start + 1 + left_size, pre_end)
   # Our tree is now built out recursively and we can return root
   return root
+
+# Time complexity: O(min(n, m)); We only need to iterate until the end of the shorter word
+# Space complexity: O(1); No extra space taken here so this should just be O(1)
+def lexical_order(word_1, word_2, alphabet):
+  # Find the greater length - we want to keep iterating up until that length or until one of the words are no longer iterable
+  greater_length = max(len(word_1), len(word_2))
+  
+  # This for loop will continuously check if the letters at i from both words are the same - if they are, we can increment i and check the next
+  for i in range(greater_length):
+    # First we find and assign a value to the letter - if i < len(word) then we must find an index; if i > len(word) then we know the index is out of bounds and should just assign float('-inf')
+    value_1 = alphabet.index(word_1[i]) if i < len(word_1) else float('-inf')
+    value_2 = alphabet.index(word_2[i]) if i < len(word_2) else float('-inf')
+    
+    # We check if value_1 is < value_2 - we need to check this first because we are trying to see if word_1 is in lexical order (comes before word_2)
+    # If instead value_2 is < value_1, then we know that word_2 has either ended early or its indexed character is coming before word_1's character and therefore it is not lexical
+    # Else, if value_1 == value_2 (implicitly implied here) - then we know we can just increment i and check the next letter
+    if value_1 < value_2:
+      return True
+    elif value_2 < value_1:
+      return False
+    
+  # If we have gone through both words, then we know that they are both the same word and can just return True
+  return True
