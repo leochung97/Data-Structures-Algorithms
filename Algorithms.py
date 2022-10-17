@@ -1994,3 +1994,28 @@ def binary_search(numbers, target):
       return middle
   # However, if we continuously slide our function and don't find anything, we can return -1
   return -1
+
+# Time complexity: O(n); We will visit every node in the BST to discover its value
+# Space complexity: O(n); We are storing our results in an array and then checking that array to determine whether the order is correct (i.e., is it a binary tree)
+def is_binary_search_tree(root):
+  values = []
+  # Create a helper function that will populate our values array
+  add_values(root, values)
+
+  # Check the values array post-helper function call to determine whether the order of values are not in increasing order - if it isn't, then we know that our tree is not a BST
+  for i in range(len(values) - 1):
+    if values[i + 1] < values[i]:
+      return False
+
+  # Otherwise we can return true
+  return True
+
+def add_values(root, values):
+  # We want to end our function early if our root is None
+  if root is None:
+    return
+
+  # We want to recursively add our leftmost values first and then our root value and our right value last
+  add_values(root.left, values)
+  values.append(root.val)
+  add_values(root.right, values)
