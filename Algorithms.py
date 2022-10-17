@@ -2071,3 +2071,21 @@ def build_tree_in_post(in_order, post_order):
   root.right = build_tree_in_post(right_in, right_post)
   # Then we just return the root as it will contain the full tree
   return root
+
+# Time complexity: O(n^2); Similar to the last problem, we are slicing our arrays and iterating through every node
+# Space complexity: O(n^2); Similar to the last problem, we are creating new arrays and solving recursively (stack)
+# This is very similar to the last problem except now we are building in pre_order; check the non-slicing solution below for a better time and space complexity solution
+def build_tree_in_pre(in_order, pre_order):
+  if len(in_order) == 0:
+    return None
+  
+  value = pre_order[0]
+  root = Node(value)
+  mid = in_order.index(value)
+  left_in = in_order[:mid]
+  right_in = in_order[mid + 1:]
+  left_pre = pre_order[1: 1 + len(left_in)]
+  right_pre = pre_order[1 + len(left_in):]
+  root.left = build_tree_in_pre(left_in, left_pre)
+  root.right = build_tree_in_pre(right_in, right_pre)
+  return root
