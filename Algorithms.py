@@ -2037,3 +2037,37 @@ def post_the_order(root, values):
   post_the_order(root.left, values)
   post_the_order(root.right, values)
   values.append(root.val)
+
+# Time complexity: O(n^2): Since we are slicing our arrays, we are creating new arrays and iterating through both input arguments
+# Space complexity: O(n^2): Since we are solving recursively and creating new arrays through slicing, our worst case space complexity will be O(n^2)
+# This is to build and initialize the class Node
+class Node:
+  def __init__(self, val):
+    self.val = val
+    self.left = None
+    self.right = None
+
+# Our function will take in two arguments of the same length and will spit out a tree built off of the in_order and post_order layouts
+# We need both arguments because otherwise, we cannot build the tree with 100% certainty (leaves can be in different places than expected if we only use in_order)
+def build_tree_in_post(in_order, post_order):
+  # Since we know that in_order and post_order are the same length, we just need to check if one of the arguments will be length 0
+  if len(in_order) == 0:
+    return None
+
+  # Then we find the value of the last element in post_order - we know that this will serve as our root because post_order trees are built around left, right, and then self
+  value = post_order[-1]
+  # Since post order is built aorund left, right, and then self, we know that its last value must be the root of our tree
+  root = Node(value)
+  # We need to find the index of our tree's root in the in_order array - we so use .index(value) to find it
+  mid = in_order.index(value)
+  # Then we split the in_order array into two different arrays so that we can find the post_order of both 
+  left_in = in_order[:mid]
+  right_in = in_order[mid + 1:]
+  # We need to do some careful slicing here to ensure that we have the same values in our left_in and left_post and the same values from our right_in and right_post
+  left_post = post_order[:len(left_in)]
+  right_post = post_order[len(left_in):-1]
+  # Feed both the left sides and right sides into a recursive call - this will automatically build out our tree as it will continue to find the middle val (root) of the sub-trees and build
+  root.left = build_tree_in_post(left_in, left_post)
+  root.right = build_tree_in_post(right_in, right_post)
+  # Then we just return the root as it will contain the full tree
+  return root
