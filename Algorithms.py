@@ -2019,3 +2019,21 @@ def add_values(root, values):
   add_values(root.left, values)
   values.append(root.val)
   add_values(root.right, values)
+
+# Time complexity: O(n); We are going to traverse through every node to check and add their value
+# Space complexity: O(n); Since we are returning all of the values in an array, our space complexity must be O(n)
+def post_order(root):
+  values = []
+  # Similar to the last problem, we will use a helper function to add all of our values to the array that we created
+  post_the_order(root, values)
+  return values
+
+def post_the_order(root, values):
+  # AIf the root if None, we can just end the function early
+  if root is None:
+    return
+  
+  # Since post order goes from left, right, and then self, we do the recursive of left, right, and then self
+  post_the_order(root.left, values)
+  post_the_order(root.right, values)
+  values.append(root.val)
