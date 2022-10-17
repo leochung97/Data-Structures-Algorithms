@@ -2089,3 +2089,31 @@ def build_tree_in_pre(in_order, pre_order):
   root.left = build_tree_in_pre(left_in, left_pre)
   root.right = build_tree_in_pre(right_in, right_pre)
   return root
+
+# Time complexity: O(n); We are no longer slicing the arrays but instead tracking indexes, so our time complexity improves to O(n)
+# Space complexity: O(n); Since we are no longer slicing arrays and instead only using indexes, our space complexity is only reduced to the implicit recursive stack
+def build_tree_in_pre2(in_order, pre_order):
+  return _build_tree_in_pre(in_order, pre_order, 0, len(in_order) - 1, 0, len(pre_order) - 1)
+
+def _build_tree_in_pre(in_order, pre_order, in_start, in_end, pre_start, pre_end):
+  # If the index of the end is less than the start, then we have gone too far and should return None as the leaf node
+  if in_end < in_start:
+    return None
+
+  # We begin the same as our slicing version - we create a value at pre_order[0] (or pre_start)
+  value = pre_order[pre_start]
+  # Set the root as that value
+  root = Node(value)
+  # Find the index in in_order of that value
+  mid = in_order.index(value)
+  # Then we need to determine the size of the left and right trees to split upon; We know it will be mid - in_start because we slice from the middle to 0 in the beginning
+  left_size = mid - in_start
+  # Next we recursively call but change the indexes that we begin from
+  # For root.left: We still start from the beginning but not end in-start at mid - 1 to indicate this is the left side
+  # We start at pre_start + 1 since we already know pre_start[0] was our root; we also end at pre_start + left_size since we know that is our "end"
+  root.left = _build_tree_in_pre(in_order, pre_order, in_start, mid - 1, pre_start + 1, pre_start + left_size)
+  # For root.right: in_start should begin at mid + 1 since we found the middle value; in_end should end at the same length
+  # We start _pre_start at + 1  + left_size to indicate that we have skipped the first element and skipped the left side that is already factored in root.left; we still end at pre_end
+  root.right = _build_tree_in_pre(in_order, pre_order, mid + 1, in_end, pre_start + 1 + left_size, pre_end)
+  # Our tree is now built out recursively and we can return root
+  return root
