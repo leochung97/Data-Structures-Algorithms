@@ -2177,3 +2177,46 @@ def topological_order(graph):
 
   # Finally, we want to return the order
   return order
+
+# Time complexity: O(e); We are first given a list of edges that we must build out a graph of -> our worst came time complexity will be O(e)
+# Space complexity: O(e); We are given a list of edges that we will build a graph (hashmap) out of so our overall space complexitiy will be O(e)
+def safe_cracking(hints):
+  # Use a helper function to build a directed acyclic graph
+  graph = build_graph(hints)
+  return topological_order(graph)
+  
+def build_graph(edges):
+  # Build a graph using the helper function
+  graph = {}
+  # For each edge, deconstruct the edge and create arrays that will contain the nodes of children for both nodes
+  for edge in edges:
+    a, b = edge
+    if a not in graph:
+      graph[a] = []
+    if b not in graph:
+      graph[b] = []
+    # Since this is a directed acyclic graph, we know that we can append only b (child) to a (parent)
+    graph[a].append(b)
+  return graph
+
+# Same algorithm as last time
+def topological_order(graph):
+  num_parents = {}
+  for node in graph:
+    num_parents[node] = 0
+  
+  for node in graph:
+    for child in graph[node]:
+      num_parents[child] += 1
+  
+  ready = [ node for node in graph if num_parents[node] == 0 ]
+  order = ''
+  while ready:
+    node = ready.pop()
+    order += str(node)
+    for child in graph[node]:
+      num_parents[child] -= 1
+      if num_parents[child] == 0:
+        ready.append(child)
+        
+  return order
