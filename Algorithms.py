@@ -2140,3 +2140,40 @@ def lexical_order(word_1, word_2, alphabet):
     
   # If we have gone through both words, then we know that they are both the same word and can just return True
   return True
+
+# Time complexity: O(e + n); We must travel through each edge and node so our total time complexity will be O(e + n)
+# Space complexity: O(n); We will store the nodes with their respective counts in a hashmap (num_parents) - this will result in a time complexity of at worst O(n)
+def topological_order(graph):
+  # Since we are going in topological order, there must be at most one node with zero parents
+  # To find that node, we will go through each node in the graph and add up the count of their parents
+  num_parents = {}
+  # Initialize each node in the graph to have zero parents
+  for node in graph:
+    num_parents[node] = 0
+    
+  # Then go through each each child node in that graph's node and increment by one to that child's num_parents count
+  for node in graph:
+    for child in graph[node]:
+      num_parents[child] += 1
+      
+  # Now we know that we will have a node that does not have any parents - we can initialize a "ready" array with the parentless node that will be used to pop off and add to an output array
+  ready = [ node for node in graph if num_parents[node] == 0]
+  # The order array will contain our actual results
+  order = []
+  # While the ready array continues to exist...
+  while ready:
+    # Pop off the current node to review
+    node = ready.pop()
+    # Append that node to the order
+    order.append(node)
+    # Then check that node's children
+    for child in graph[node]:
+      # For each child, we want to decrement its count in num_parents
+      num_parents[child] -= 1
+      # If the count reaches zero, we know that the node has exhausted all possible parents and can finally be added to the ready list
+      # Otherwise, we don't want to add to the ready list because we haven't actually exhausted all parents yet and the order is inaccurate
+      if num_parents[child] == 0:
+        ready.append(child)
+
+  # Finally, we want to return the order
+  return order
