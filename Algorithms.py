@@ -2293,3 +2293,32 @@ def token_replace(s, tokens):
   
   # Then we return the output as a joined string
   return "".join(output)
+
+# n = length of string
+# m = # of tokens
+# Time complexity: O(n^m); We must pass through our string but will also pass through the number of tokens possible that contain other tokens - so our best possible case is O(n^m)
+# Space complexity: O(n^m); Since we are using an output that will contain our result, we can also expect a space complexity of O(n^m)
+def token_transform(s, tokens):
+  # Same code as token_replace until we hit our else conditional
+  output = []
+  i = 0
+  j = 1
+  while i < len(s):
+    if s[i] != "$":
+      output.append(s[i])
+      i += 1
+      j = i + 1
+    elif s[j] != "$":
+      j += 1
+    else:
+      key = s[i:j + 1]
+      value = tokens[key]
+      # We want to first solve for our evaluated value by recursively passing our value into our token_transform -> this will set evaluated_value to the resulting replaced value in the key
+      evaluated_value = token_transform(value, tokens)
+      # We want to actually memoize this and set the tokens[key] to the evaluated value - failing to do so will cause our program to run factorial
+      tokens[key] = evaluated_value
+      # Now that we have our evaluated value, we can just add it to our output as before
+      output.append(evaluated_value)
+      i = j + 1
+      j = i + 1
+  return "".join(output)
