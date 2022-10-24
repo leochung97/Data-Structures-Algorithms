@@ -2220,3 +2220,44 @@ def topological_order(graph):
         ready.append(child)
         
   return order
+
+# Time complexity: O(3^xy); Each position in the grid that we visit will have at most three potential other positions to check; since we are doing this in a grid it will be O(3^xy) time complexity
+# Space complexity: O(xy); We are recursively iterating through each position in the grid so our implicit stack will be O(xy)
+def string_search(grid, s):
+  # For each position in the grid, we want to check if our helper function will return True
+  for x in range(len(grid)):
+    for y in range(len(grid[0])):
+      if dfs(grid, x, y, s):
+        return True
+      
+  # If not, we can just return False
+  return False
+
+def dfs(grid, x, y, s):
+  # If our string is empty, it must mean that we have found a possible path and can thus return True
+  if s == "":
+    return True
+  
+  # Find out whether we are inbound the grid or not - return False if not else continue
+  row_inbounds = 0 <= x < len(grid)
+  col_inbounds = 0 <= y < len(grid[0])
+  if not row_inbounds or not col_inbounds:
+    return False
+  
+  # Check if the current position's character is what we are looking for (first letter of the string)
+  char = grid[x][y]
+  # If not, we can just return False
+  if char != s[0]:
+    return False
+  
+  # If the current position's character is the first character of our string, then we know we can begin iterating through and checking for other possible letters in the sequence
+  # Create a suffix that will track the remaining leters to check through
+  suffix = s[1:]
+  # Temporarily make our current char a filler character - this will prevent our dfs from returning to this position
+  grid[x][y] = "*"
+  # Result will go to the top, right, bottom, and left positions to check if their letters will continue to track our suffix
+  result = dfs(grid, x + 1, y, suffix) or dfs(grid, x - 1, y, suffix) or dfs(grid, x, y + 1, suffix) or dfs(grid, x, y - 1, suffix)
+  # Reset our current grid's character in case result is False, else the graph will contain null characters and potentially ruin results
+  grid[x][y] = char
+  # Return result assuming that dfs has return True if at least one path was found or False if none were found for all positions
+  return result
