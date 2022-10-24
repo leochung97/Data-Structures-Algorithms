@@ -2261,3 +2261,35 @@ def dfs(grid, x, y, s):
   grid[x][y] = char
   # Return result assuming that dfs has return True if at least one path was found or False if none were found for all positions
   return result
+
+# Time complexity: O(n); We are doing a single pass-through of the input string
+# Space complexity: O(n); We are storing the results in a new output array that will be O(n)
+# On a surface level, this problem seems pretty simple but you will need to notice that punctuation will affect how your tokens are recognized
+def token_replace(s, tokens):
+  # We create an output that will later be joined to return a string containing our replaced words
+  output = []
+  # We use two pointers with j always being ahead of i
+  i = 0
+  j = 1
+  
+  # While i is less than the length of the string...
+  while i < len(s):
+    # We check first if s[i] is == to "$" - if it is not, we want to just append the current character to output and increment both i and j
+    if s[i] != "$":
+      output.append(s[i])
+      i += 1
+      j = i + 1
+    # If s[i] == "$" then we need to check where the token ends within the string - we continuously increment j += 1 until we reach the end of the token
+    elif s[j] != "$":
+      j += 1
+    # Since we found the beginning and end of a token, we can take set s[i: j + 1] as our key and find out the value of the token
+    else:
+      key = s[i: j + 1]
+      # We append the value of the token to our output
+      output.append(tokens[key])
+      # Then we set the tokens to start after the end of our most token
+      i = j + 1
+      j = i + 1
+  
+  # Then we return the output as a joined string
+  return "".join(output)
