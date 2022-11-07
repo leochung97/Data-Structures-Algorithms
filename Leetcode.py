@@ -201,6 +201,44 @@ class Solution:
     # You can technically answer this question in the same manner of the Fibonacci Number (#509)
     return climb(n)
 
+# 98. Valid Binary Search Tree
+class TreeNode:
+  def __init__(self, val=0, left=None, right=None):
+    self.val = val
+    self.left = left
+    self.right = right
+
+class Solution:
+  # Time complexity: O(n); We go through every node in the tree
+  # Space complexity: O(n); We temporarily store all node values in an "order" array that will be used to determine whether the tree is inorder or not
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+      # Binary Search Tree's must be in order of values or it is NOT a binary search tree
+      # We set up an order array that will contain all node values -> this will then be iterated through to determine whether values are in order or not
+      order = []
+      # Use a helper function to build out the inorder values
+      self.inOrder(root, order)
+
+      # Simple function to determine whether a node's value is not in order
+      for i in range(len(order) - 1):
+        if order[i] >= order[i + 1]:
+          return False
+
+      # After everything, we can return True
+      return True
+
+    # Recursively add the left values first and then the middle and then the right values
+    def inOrder(self, root, order):
+      # Return early if root is None because we've reached the end of tree
+      if root is None:
+        return
+
+      # Recurse left first because we want this in order!
+      self.inOrder(root.left, order)
+      # Then add the current node
+      order.append(root.val)
+      # Then recurse right
+      self.inOrder(root.right, order)
+
 # 110. Balanced Binary Tree
 class TreeNode:
   def __init__(self, val=0, left=None, right=None):
