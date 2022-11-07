@@ -4,7 +4,8 @@ from collections import Counter
 
 # 1. Two Sum
 class Solution:
-  # Time complexity: O(n) because you run through the entire List at worst; Space complexity: O(n) as you may store the entire List in the hashmap at worst
+  # Time complexity: O(n) because you run through the entire List at worst
+  # Space complexity: O(n) as you may store the entire List in the hashmap at worst
   def twoSum(self, nums: List[int], target: int) -> List[int]:
     hash = {}
     # Note: Range gives you a range from 0 to the number (not inclusive of the number) if only a single argument is provided
@@ -16,6 +17,8 @@ class Solution:
 
 # 13. Roman to Integer
 class Solution:
+  # Time complexity: O(n); You are running through each character of the string to determine the final result
+  # Space complexity: O(1); While we are using a hashmap to store some constants, we are actually not using any additional space complexity that is based on input size
   def romanToInt(self, s: str) -> int:
     numerals = {
       "I": 1,
@@ -41,7 +44,8 @@ class Solution:
 
 # 20. Valid Parentheses
 class Solution:
-  # Time complexity: O(n) because you run through the entire string; Space complexity: O(n) as the stack will be the size of the input
+  # Time complexity: O(n) because you run through the entire string
+  # Space complexity: O(n) as the stack will be the size of the input
   def isValid(self, s: str) -> bool:
     # String is not valid if it is an odd length as that means the stack will always have a remaining character
     if len(s) % 2 == 1:
@@ -71,7 +75,8 @@ class ListNode:
     self.next = next
 
 class Solution:
-  # Time complexity: O(n + m) as it depends on the size of both linked lists; Space complexity: O(1) because we only set up a few variables that are not determined by input size
+  # Time complexity: O(n + m) as it depends on the size of both linked lists
+  # Space complexity: O(1) because we only set up a few variables that are not determined by input size
   def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
     # We set up two variables here because sort_list will continuously be reassigned to its next value whereas output will only keep a receipt of the sort_list nexts
     output = sort_list = ListNode(0)
@@ -295,6 +300,31 @@ class Solution:
 
     # You only return true after exiting the while loop (after determining that slow is indeed equal to fast)
     return True
+
+# 152. Maximum Product Subarray
+class Solution:
+  # Time complexity: O(n); We will go through the entire array so we are size O(n)
+  # Space complexity: O(1); We are using constant space to track our variables
+  def maxProduct(self, nums: List[int]) -> int:
+    # Base case if nums list is empty
+    if not nums:
+      return 0
+
+    # Set up two variables - one will track the highest and the other will track the lowest
+    result = max_so_far = min_so_far = nums[0]
+    # Result will be returned but should be continuously set to max_so_far
+
+    for i in range(1, len(nums)):
+      curr = nums[i]
+      # We need to track both the lowest min (negative) and highest max (positive) and then determine whether that is our temp_max
+      temp_max = max(curr, max_so_far * curr, min_so_far * curr)
+      min_so_far = min(curr, max_so_far * curr, min_so_far * curr)
+
+      max_so_far = temp_max
+
+      result = max(max_so_far, result)
+
+    return result
 
 # 167. Two Sum II
 class Solution:
