@@ -46,6 +46,51 @@ class Solution:
 
     return total
 
+# 15. 3Sum
+class Solution:
+  # Terrible solution - would suggest no-sort solution
+  # Time complexity: Asymptotically this is O(n^2) but you should point out that it is actually O(n + nlogn + 2n^2)
+  # Space complexity: O(n); We are storing a bunch of lists and sets that cumulate to O(n) space max
+  def threeSum(self, nums: List[int]) -> List[List[int]]:
+    results = set()
+
+    neg, pos, zeros = [], [], []
+    for num in nums:
+      if num > 0:
+        pos.append(num)
+      elif num < 0:
+        neg.append(num)
+      else:
+        zeros.append(num)
+    
+    # (0, 0, 0)
+    if len(zeros) >= 3:
+      results.add((0,0,0))
+    
+    neg_set, pos_set = set(neg), set(pos)
+
+    # (-3, 0, 3)
+    if zeros:
+      for num in pos_set:
+        if -1 * num in neg_set:
+          results.add((-1 * num, 0, num))
+    
+    # (-1, -2, 3)
+    for i in range(len(neg)):
+      for j in range(i + 1, len(neg)):
+        target = -1 * (neg[i] + neg[j])
+        if target in pos_set:
+          results.add(tuple(sorted([neg[i], neg[j], target])))
+    
+    # (1, 2, -3)
+    for i in range(len(pos)):
+      for j in range(i + 1, len(pos)):
+        target = -1 * (pos[i] + pos[j])
+        if target in neg_set:
+          results.add(tuple(sorted([pos[i], pos[j], target])))
+
+    return results
+
 # 20. Valid Parentheses
 class Solution:
   # Time complexity: O(n) because you run through the entire string
