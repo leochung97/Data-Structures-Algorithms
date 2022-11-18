@@ -20,6 +20,7 @@ class Solution:
   # Time complexity: O(n); You are running through each character of the string to determine the final result
   # Space complexity: O(1); While we are using a hashmap to store some constants, we are actually not using any additional space complexity that is based on input size
   def romanToInt(self, s: str) -> int:
+    # Create a numerals hashmap
     numerals = {
       "I": 1,
       "V": 5,
@@ -33,10 +34,13 @@ class Solution:
     total = 0
     i = 0
     while i < len(s):
+      # Check if the number ahead is greater than the current number - if it is, then we know we are supposed to subtract the first number and add to the second number
       if i + 1 < len(s) and numerals[s[i]] < numerals[s[i + 1]]:
         total += numerals[s[i + 1]] - numerals[s[i]]
+        # Skip by 2 since we know we just added two figures
         i += 2
       else:
+        # Otherwise we can just add it
         total += numerals[s[i]]
         i += 1
 
