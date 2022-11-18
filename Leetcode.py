@@ -577,6 +577,47 @@ class Solution:
   # Note: There is a more optimal solution here using the golden ratio forumla but it would require you to know the golden ratio (1 + (5 ** 0.5)) / 2
   # The time complexity is more efficient using the golden ratio (O(log n)) but it requires knowledge of the golden ratio 
 
+# 542. 01 Matrix
+from collections import deque
+
+class Solution:
+  # Time complexity: O(x * y); We must go through every position in the grid
+  # Space complexity: O(x * y); At worst, we may have to temporarily store every number in the grid for our queue
+  # We are going to implement this solution using BFS because we must determine the distance away from a 0
+  def updateMatrix(self, grid: List[List[int]]) -> List[List[int]]:
+    # We are using BFS so set up a queue
+    queue = deque()
+    # We don't want to revisit any cells that we've already calculated values for, so set up a set
+    visited = set()
+    for x in range(len(grid)):
+      for y in range(len(grid[0])):
+        # For every cell, we want to see the distance from 0's - we can calculate this by starting from every 0 and working towards a non-zero figure
+        if grid[x][y] == 0:
+          visited.add((x, y))
+          queue.append((x, y))
+
+    while queue:
+      # Deconstruct x and y from the queue's topmost position
+      x, y = queue.popleft()
+      directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+      # For each direction, we want to check if the neighbors have already been visited and whether they are valid
+      # If they have not been visited and are valid, we know that they must be NON-ZERO figures (otherwise they would have been in visited already) - we can increment their values based on that
+      for dirr in directions:
+        dx, dy = dirr
+        newX, newY = x + dx, y + dy
+        x_inbounds = 0 <= newX < len(grid)
+        y_inbounds = 0 <= newY < len(grid[0])
+
+        if x_inbounds and y_inbounds and (newX, newY) not in visited:
+          # Increment by one using the current position's value (could be > 0)
+          grid[newX][newY] = grid[x][y] + 1
+          # Make sure to add our new neighbor to the visited since we have technically changed its value and visited it
+          visited.add((newX, newY))
+          # Then make sure to add it to our queue so that we can check its neighbors as well
+          queue.append((newX, newY))
+    
+    return grid
+
 # 543. Diameter of a Binary Tree
 class Solution:
   # Time complexity: O(n); You must iterate through all nodes to determine the diameter of the binary tree
