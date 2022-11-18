@@ -741,3 +741,28 @@ class Solution:
 
     # Make sure to return the answer - this should be a new value or -1 if nothing is found
     return answer
+
+# 1396. Design Underground System
+import collections
+class UndergroundSystem:
+  def __init__(self):
+    self.checked_in = {}
+    self.journey_data = collections.defaultdict(lambda: [0, 0])
+
+  # Time complexity: O(n) worst case; O(1) average to insert
+  # Space complexity: O(n) worst case
+  def checkIn(self, id: int, stationName: str, t: int) -> None:
+    self.checked_in[id] = [stationName, t]
+
+  # Time complexity: O(n) worst case; O(1) average to delete
+  # Space complexity: O(n) worst case
+  def checkOut(self, id: int, stationName: str, t: int) -> None:
+    startStation, startTime = self.checked_in.pop(id)
+    self.journey_data[(startStation, stationName)][0] += t - startTime
+    self.journey_data[(startStation, stationName)][1] += 1
+
+  # Time complexity: O(n) worst case; O(1) average to search
+  # Space complexity: O(n) worst case
+  def getAverageTime(self, startStation: str, endStation: str) -> float:
+    total_time, total_trips = self.journey_data[(startStation, endStation)]
+    return total_time / total_trips
