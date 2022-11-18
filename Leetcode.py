@@ -693,6 +693,25 @@ class Solution:
     # Remember that the image will be altered and thus should be returned as is
     return image
 
+# 1029. Two City Scheduling
+class Solution:
+  # Time complexity: O(nlogn); We are sorting our costs to determine the cheapest cities to go to City A and the cheapest to go to City B
+  # Space complexity: O(n); In Python, the sort function uses the Timsort algorithm which is a combination of Merge Sort and Insertion Sort -> this takes O(n) additional space
+  def twoCitySchedCost(self, costs: List[List[int]]) -> int:
+    # Sort the costs in-place by determining which cities are cheaper to go to City A first; all of the cities that are greater (x[0] - x[1]) will end up being cheaper for City B
+    costs.sort(key = lambda x: x[0] - x[1])
+
+    # Set up the total costs variable since this is what we want to return
+    total = 0
+    # N represents the length of the costs divided by 2 because we need to 
+    n = len(costs) // 2
+    # The beginning half of the sorted costs show cheaper costs to go to City A - we add those; the ending half of the sorted costs show cheaper costs to go to City B - we add those
+    for i in range(n):
+      total += costs[i][0] + costs[i + n][1]
+
+    # Don't forget to return the total!
+    return total
+
 # 1064. Fixed Point
 class Solution:
   # Time complexity: O(log n); Since we're using a binary search, we halve the size of the array in each loop and thus reduce our time complexity to O(log n) time
