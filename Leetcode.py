@@ -428,7 +428,7 @@ class Solution:
     # You only return true after exiting the while loop (after determining that slow is indeed equal to fast)
     return True
 
-# 150. Evalute Reverse Polish Notation
+# 150. Evaluate Reverse Polish Notation
 class Solution:
   # Time complexity: O(n); We are going through the entire list
   # Space complexity: O(n); We are using a stack to temporarily store our numbers
