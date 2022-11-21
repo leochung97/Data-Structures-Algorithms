@@ -428,6 +428,47 @@ class Solution:
     # You only return true after exiting the while loop (after determining that slow is indeed equal to fast)
     return True
 
+# 150. Evalute Reverse Polish Notation
+class Solution:
+  # Time complexity: O(n); We are going through the entire list
+  # Space complexity: O(n); We are using a stack to temporarily store our numbers
+  def evalRPN(self, tokens: List[str]) -> int:
+    # Define our operations - we need to make sure that we check if our token is in here
+    operations = "+-/*"
+    # This problem is stack related - if we look at the input list it is obvious that we can iterate through this using a stack
+    stack = []
+
+    # For each "token"
+    for token in tokens:
+      # If the token is not in the operations, we can just store it into our stack
+      if token not in operations:
+        # IMPORTANT - we need to add INTEGERS of the token
+        stack.append(int(token))
+        # Instead of continue, you can make the below an if and the rest and elif
+        continue
+        
+      # Pop off the last two numbers of the stack - we should always have two numbers in the stack
+      num_2 = stack.pop()
+      num_1 = stack.pop()
+
+      # Set up a variable worth zero that will be used to temporarily store our resulting operation into the stack
+      result = 0
+      if token == "+":
+        result = num_1 + num_2
+      elif token == "-":
+        result = num_1 - num_2
+      elif token == "*":
+        result = num_1 * num_2
+      # VERY IMPORTANT - we need to make the num_1 / num_2 an integer to round up!
+      else:
+        result = int(num_1 / num_2)
+      
+      # Append the result as it will become the next number
+      stack.append(result)
+
+    # Return the result
+    return stack.pop()
+
 # 152. Maximum Product Subarray
 class Solution:
   # Time complexity: O(n); We will go through the entire array so we are size O(n)
