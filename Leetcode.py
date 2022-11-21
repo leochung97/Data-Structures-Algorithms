@@ -15,6 +15,30 @@ class Solution:
         return [hash[complement], i]
       hash[nums[i]] = i
 
+# 3. Longest Substring Without Repeating Characters
+class Solution:
+  # Time complexity: O(n); We are going through the entire string
+  # Space complexity: O(n); We may potentially store all of the characters of the string into our hashmap - technically we can argue that this is O(min(n, m)) where m is the size of our character set
+  def lengthOfLongestSubstring(self, s: str) -> int:
+    # We want to return the longest substring's length so we need to set up a variable tracking the length
+    longest = 0
+    # We want to track the seen characters by their last seen indexes
+    seen = {}
+    # We are using a sliding window from [i, j] to determine the longest substring
+    i = 0
+    # Use a different variable for the range
+    for j in range(len(s)):
+      # If the current index that we are looking at has already been in seen, we need to replace the start of our window with the seen index
+      # We want to make sure that we set it to the max of itself or seen[s[j]] in case we come across another repeated character
+      if s[j] in seen:
+        i = max(seen[s[j]], i)
+      # Then we want to calculate the longest - remember to add 1 because we are zero-indexed
+      longest = max(longest, j - i + 1)
+      # Then set the seen character's index in the hashmap to j + 1 (because we are zero-indexed)
+      seen[s[j]] = j + 1
+    # Return longest
+    return longest
+
 # 13. Roman to Integer
 class Solution:
   # Time complexity: O(n); You are running through each character of the string to determine the final result
