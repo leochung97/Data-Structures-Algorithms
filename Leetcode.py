@@ -1,6 +1,6 @@
 from typing import *
 from math import *
-from collections import Counter
+from collections import *
 
 # 1. Two Sum
 class Solution:
