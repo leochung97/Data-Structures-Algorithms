@@ -620,7 +620,7 @@ class Solution:
       return False
     
     # Counter is a built-in Python function that comes from collections library; it iterates through every character in the string and creates a hashmap counter
-    return Counter(s) == Counter(t)
+    return collections.Counter(s) == collections.Counter(t)
 
     # Otherwise, you can use the following answer to be more explicit:
     # counter = collections.defaultdict(int)
