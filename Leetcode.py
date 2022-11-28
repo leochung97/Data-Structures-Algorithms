@@ -552,6 +552,19 @@ class Solution:
     # Return the tracked majority number
     return majority
 
+# 217. Contains Duplicate
+class Solution:
+  # Time complexity: O(n); You run through the entire list once
+  # Space complexity: O(n); You store at most all of the numbers into the temporary hashmap
+  def containsDuplicate(self, nums: List[int]) -> bool:
+    hash = {}
+    for i in nums:
+      if i not in hash:
+        hash[i] = 0
+      else:
+        return True
+    return False
+
 # 226. Invert Binary Tree
 class TreeNode:
   def __init__(self, val=0, left=None, right=None):
